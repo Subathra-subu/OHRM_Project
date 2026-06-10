@@ -1,0 +1,36 @@
+# Virtual Environment
+OHRM_venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest Cache
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Reports
+PROJECT_OHRM/Reports/HTMLReports/*
+PROJECT_OHRM/Reports/AllureReports/*
+
+# Screenshots
+PROJECT_OHRM/TestFailures/Screenshots/*
+
+# Environment Variables
+.env
+
+# Build Files
+build/
+dist/
+*.egg-info/
+
+# OS Files
+.DS_Store
+Thumbs.db
