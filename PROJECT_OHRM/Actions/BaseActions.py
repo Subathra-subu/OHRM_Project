@@ -18,7 +18,7 @@ class BaseActions:
             )
 
             element.clear()
-            element.send_keys(value)
+            element.send_keys(str(value))
 
             self.logger.info(f"Entered '{value}' into {locator}")
 
