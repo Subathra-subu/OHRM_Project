@@ -130,3 +130,19 @@ class BaseActions:
 
             self.logger.exception(e)
             raise
+    def js_click(self,locator):
+        try:
+            element=self.wait.until(EC.visibility_of_element_located(locator))
+            self.driver.execute_script("arguments[0].click()",element)
+            self.logger.info(f"JS Clicked{element}")
+        except Exception as e:
+            self.logger.error("Failed to click the element")
+            self.logger.exception(e)
+    def scroll_into_view(self,locator):
+   
+        try:
+            element=self.wait.until(EC.presence_of_element_located(locator))
+            self.driver.execute_script("arguments[0].scrollIntoView()",element)
+        except Exception as e:
+            self.logger.error("Failed to scroll into view of the element")
+            self.logger.exception(e)
