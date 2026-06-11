@@ -188,7 +188,7 @@ class BaseActions:
             self.logger.error("Element Still Visible")
             self.logger.exception(e)
             raise
-    from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
+
 
     def get_attribute_lambda(self, locator, attribute):
         try:
