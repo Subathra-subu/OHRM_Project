@@ -29,3 +29,33 @@ class LoginActions(BaseActions):
             self.logger.exception(e)
 
             raise
+
+    def invalid_login(self, username, password):
+
+        try:
+
+            self.logger.info("Login Started")
+
+            self.enter_text(LoginPage.USERNAME, username)
+
+            self.enter_text(LoginPage.PASSWORD, password)
+
+            self.click(LoginPage.LOGIN_BUTTON)
+
+            message = self.get_text(
+                LoginPage.INVALID_CREDENTIALS_MESSAGE
+            )
+
+            assert message == "Invalid credentials"
+
+            self.logger.info("Login Failed")
+
+            return message
+
+        except Exception as e:
+
+            self.logger.error("Login Failed")
+
+            self.logger.exception(e)
+
+            raise
