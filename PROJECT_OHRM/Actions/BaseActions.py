@@ -177,3 +177,14 @@ class BaseActions:
 
         except:
             return False
+    
+    def wait_for_invisibility(self, locator, timeout=10):
+
+        try:
+            WebDriverWait(self.driver,timeout).until( EC.invisibility_of_element_located(locator))
+            self.logger.info("Element Became Invisible")
+
+        except Exception as e:
+            self.logger.error("Element Still Visible")
+            self.logger.exception(e)
+            raise
