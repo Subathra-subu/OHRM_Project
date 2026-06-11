@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 class DashboardPage:
 
-    DASHBOARD = "//h6"
+    DASHBOARD = (By.XPATH, "//h6")
