@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from Utilities.ReadConfig import get_config
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="function")
 def test_setup_and_down(request):
 
     browser = get_config(
