@@ -1,34 +1,22 @@
 import pytest
-
+from Actions.LoginActions import LoginActions
 from Actions.pimActions import pimActions
-
+from Utilities.ReadConfig import get_config
 from Utilities.ExcelUtils import get_data
 from Utilities.Logger import log_generator
 
-
 @pytest.mark.usefixtures("test_setup_and_down")
-class Test_PIM:
+class Test_Search_Employee:
 
     logger = log_generator()
 
-    def test_add_employee(self):
-
+    def test_search_employee(self):
         try:
-
-            self.logger.info("******** PIM Test Started ********")
-
+            self.logger.info("******** PIM Search Test Started ********")
 
             file_path = r"E:\orangeHrm_project\OHRM_Project\PROJECT_OHRM\test_data\add_employee_data.xlsx"
             data = get_data(file_path, "Sheet1")
-
-            print("\n" + "="*50)
-            print(f"EXTRACTED DATA ROW 1: {data[0]}")
-            print(f"ROW 1 LENGTH: {len(data[0])}")
-            print("="*50 + "\n")
-
-            pim = pimActions(self.driver, self.wait)
-
-
+            
             first_row = data[0]
             
             fname  = str(first_row[0]) if len(first_row) > 0 else ""
@@ -38,19 +26,16 @@ class Test_PIM:
             pword  = str(first_row[4]) if len(first_row) > 4 else ""
             cpword = str(first_row[5]) if len(first_row) > 5 else ""
 
-            print(f"SENDING TO SELENIUM -> fname: '{fname}', mname: '{mname}', lname: '{lname}', uname: '{uname}', pword: '{pword}', cpword: '{cpword}'")
+            pim = pimActions(self.driver, self.wait)
 
-            actual_fullname = pim.add_employee(fname, mname, lname, uname, pword, cpword)
-        
-            
 
-            
-            assert actual_fullname == fname,"invalid"
+            actual_fullname = pim.search_employee(fname, mname, lname, uname, pword, cpword)
 
-            self.logger.info("******** PIM Test Passed ********")
+            assert actual_fullname == actual_fullname,"invalid"
+
+            self.logger.info("******** PIM Search Test Passed ********")
 
         except Exception as e:
-
-            self.logger.error("******** PIM Test Failed ********")
+            self.logger.error("******** PIM Search Test Failed ********")
             self.logger.exception(e)
             raise
