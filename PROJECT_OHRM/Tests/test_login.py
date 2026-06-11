@@ -16,7 +16,7 @@ class Test_Login:
 
         try:
 
-            self.logger.info("******** Test Started ********")
+            self.logger.info("Test Started")
 
             username = get_config(
                 "username and password",
@@ -33,7 +33,10 @@ class Test_Login:
                 self.wait
             )
 
-            login.login(username, password)
+            login.login(
+                username,
+                password
+            )
 
             dashboard = DashboardActions(
                 self.driver,
@@ -42,11 +45,11 @@ class Test_Login:
 
             dashboard.verify_dashboard()
 
-            self.logger.info("******** Test Passed ********")
+            self.logger.info("Test Passed")
 
         except Exception as e:
 
-            self.logger.error("******** Test Failed ********")
+            self.logger.error("Test Failed")
 
             self.logger.exception(e)
 
