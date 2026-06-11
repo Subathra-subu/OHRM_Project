@@ -56,3 +56,25 @@ class BaseActions:
             self.logger.error("Failed to get text")
             self.logger.exception(e)
             raise
+    def js_click(self,locator):
+        try:
+            element=self.wait.until(EC.visibility_of_element_located(By.XPATH,locator))
+            self.driver.execute_script("arguments[0].click()",element)
+            self.logger.info(f"Clicked{element}")
+        except Exception as e:
+            self.logger.error("Failed to click the element")
+            self.logger.exception(e)
+    def scroll_to_element(self,locator):
+        try:
+            self.driver.execute_script("arguments[0].scroll_to_element()",locator)
+            self.logger.info(f"Scrolled until element{locator}")
+        except Exception as e :
+            self.logger.error("Failed to scroll element")
+            self.logger.exception(e)
+    def scroll_into_view(self,locator):
+        try:
+            element=self.wait.until(EC.presence_of_element_located(By.XPATH,locator))
+            self.driver.execute_script("arguments[0].scrollIntoView",element)
+        except Exception as e:
+            self.logger.error("Failed to scroll into view of the element")
+            self.logger.exception(e)
