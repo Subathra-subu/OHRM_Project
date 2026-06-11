@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from Utilities.Logger import log_generator
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class BaseActions:
@@ -146,3 +147,33 @@ class BaseActions:
         except Exception as e:
             self.logger.error("Failed to scroll into view of the element")
             self.logger.exception(e)
+
+    def wait_for_visibility(self, locator, timeout=10):
+        try:
+            element = WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located(locator))
+            self.logger.info("Element is Visible")
+            return element
+        except Exception as e:
+
+            self.logger.error("Element Not Visible")
+            self.logger.exception(e)
+            raise
+
+    def wait_for_clickable(self, locator, timeout=10):
+        try:
+            element = WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable(locator))
+            self.logger.info("Element is Clickable")
+            return element
+        
+        except Exception as e:
+            self.logger.error("Element Not Clickable")
+            self.logger.exception(e)
+            raise
+
+    def is_visible(self, locator):
+        try:
+            element = self.wait.until(EC.visibility_of_element_located(locator))
+            return element.is_displayed()
+
+        except:
+            return False
