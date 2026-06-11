@@ -88,3 +88,36 @@ class Test_Login:
             self.logger.exception(e)
 
             raise
+
+    @pytest.mark.parametrize(
+    "username,password",
+    ExcelUtils.get_data(
+        r"test_data\inValid_Login_datas.xlsx",
+        "Sheet2"
+        )
+    )
+    def test_without_credential(self, username, password):
+
+        try:
+
+            self.logger.info("Without Credential Test Started")
+
+            login = LoginActions(
+                self.driver,
+                self.wait
+            )
+
+            login.without_credential(
+                username,
+                password
+            )
+
+            self.logger.info("Without Credential Test Passed")
+
+        except Exception as e:
+
+            self.logger.error("Without Credential Test Failed")
+
+            self.logger.exception(e)
+
+            raise
