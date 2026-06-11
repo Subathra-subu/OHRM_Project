@@ -190,6 +190,7 @@ class BaseActions:
             self.logger.exception(e)
             raise
 
+
         def get_attribute_lambda(self, locator, attribute):
          try:
             by_type, selector = locator
