@@ -5,6 +5,7 @@ from Pages.LoginPage import LoginPage
 class LoginActions(BaseActions):
 
     def __init__(self, driver, wait):
+
         super().__init__(driver, wait)
 
     def login(self, username, password):
@@ -19,10 +20,12 @@ class LoginActions(BaseActions):
 
             self.click(LoginPage.LOGIN_BUTTON)
 
-            self.logger.info("Login Completed")
+            self.logger.info("Login Successful")
 
         except Exception as e:
 
             self.logger.error("Login Failed")
+
             self.logger.exception(e)
+
             raise

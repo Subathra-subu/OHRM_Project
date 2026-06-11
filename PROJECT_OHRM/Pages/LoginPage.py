@@ -1,7 +1,9 @@
+from selenium.webdriver.common.by import By
+
 class LoginPage:
 
-    USERNAME = "//input[@name='username']"
+    USERNAME = (By.XPATH , "//input[@name='username']" )
 
-    PASSWORD = "//input[@name='password']"
+    PASSWORD = (By.XPATH , "//input[@name='password']" )
 
-    LOGIN_BUTTON = "//button[@type='submit']"
+    LOGIN_BUTTON = (By.XPATH , "//button[@type='submit']" )
