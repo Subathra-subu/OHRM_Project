@@ -11,7 +11,7 @@ from Utilities.Logger import log_generator
 class Test_Login:
 
     logger = log_generator()
-
+    
     def test_login(self):
 
         try:

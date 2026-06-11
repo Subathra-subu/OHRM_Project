@@ -15,4 +15,4 @@ class BasePage:
     Directory = (By.XPATH,"//li[@class='oxd-main-menu-item-wrapper']/child::a[contains(@href,'direct')]")
     Maintenance = (By.XPATH,"//li[@class='oxd-main-menu-item-wrapper']/child::a[contains(@href,'maintenance')]")  
     claim = (By.XPATH,"//li[@class='oxd-main-menu-item-wrapper']/child::a[contains(@href,'clai')]")
-    Buzz = (By.XPATH,"//li[@class='oxd-main-menu-item-wrapper']/child::a[contains(@href,'buzz')]") 
+    Buzz = (By.XPATH,"//li[@class='oxd-main-menu-item-wrapper']/child::a[contains(@href,'buzz')]")
