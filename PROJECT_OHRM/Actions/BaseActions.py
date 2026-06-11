@@ -3,6 +3,7 @@ from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 
+
 class BaseActions:
 
     def __init__(self, driver, wait):
@@ -188,10 +189,9 @@ class BaseActions:
             self.logger.error("Element Still Visible")
             self.logger.exception(e)
             raise
-    from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 
-    def get_attribute_lambda(self, locator, attribute):
-        try:
+        def get_attribute_lambda(self, locator, attribute):
+         try:
             by_type, selector = locator
 
             if attribute == "value":
@@ -211,6 +211,6 @@ class BaseActions:
             self.wait.until(EC.visibility_of_element_located((by_type, selector)))
             return self.driver.find_element(by_type, selector).get_attribute(attribute)
 
-        except Exception as e:
+         except Exception as e:
             self.logger.exception(e)
             raise
