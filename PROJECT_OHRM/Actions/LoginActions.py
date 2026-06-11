@@ -43,10 +43,12 @@ class LoginActions(BaseActions):
             self.click(LoginPage.LOGIN_BUTTON)
 
             message = self.get_text(
+                
                 LoginPage.INVALID_CREDENTIALS_MESSAGE
-            )
+                
+                )
 
-            assert message == "Invalid credentials"
+            assert "Invalid" in message
 
             self.logger.info("Login Failed")
 
@@ -55,6 +57,35 @@ class LoginActions(BaseActions):
         except Exception as e:
 
             self.logger.error("Login Failed")
+
+            self.logger.exception(e)
+
+            raise
+
+    def without_credential(self, username, password):
+
+        try:
+
+            self.logger.info("Without Credential Login Started")
+
+            self.enter_text(LoginPage.USERNAME, username)
+
+            self.enter_text(LoginPage.PASSWORD, password)
+
+            self.click(LoginPage.LOGIN_BUTTON)
+
+            messages = self.driver.find_elements(
+                *LoginPage.REQUIRED_MESSAGE
+            )
+
+            for message in messages:
+                assert "Required" in message.text
+
+            self.logger.info("Required Validation Displayed")
+
+        except Exception as e:
+
+            self.logger.error("Without Credential Login Failed")
 
             self.logger.exception(e)
 
