@@ -191,7 +191,7 @@ class BaseActions:
             raise
 
 
-        def get_attribute_lambda(self, locator, attribute):
+    def get_attribute_lambda(self, locator, attribute):
          try:
             by_type, selector = locator
 
