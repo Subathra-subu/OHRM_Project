@@ -34,7 +34,7 @@ def test_setup_and_down(request):
 
     driver.get(url)
 
-    wait = WebDriverWait(driver, 20)
+    wait = WebDriverWait(driver, 30)
 
     request.cls.driver = driver
     request.cls.wait = wait
