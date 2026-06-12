@@ -21,3 +21,7 @@ class DirectoryPage:
     no_record_message = (By.XPATH,"//div[contains(@class,'oxd-table-filter')]//following::span[normalize-space()='No Records Found']")
 
     error_message = (By.XPATH,"//input/ancestor::div[contains(@class,'oxd-input-group')]//span[contains(@class,'oxd-input-field-error-message')]")
+
+    job_title_options = (By.XPATH, "//div[@role='listbox']//span")
+
+    employee_job_titles = (By.XPATH, "//p[contains(@class,'orangehrm-directory-card-subtitle')]")

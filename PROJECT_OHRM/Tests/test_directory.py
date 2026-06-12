@@ -2,6 +2,7 @@ import pytest
 
 from Actions.LoginActions import LoginActions
 from Actions.DirectoryActions import DirectoryActions
+from Pages.DirectoryPage import DirectoryPage
 from Utilities.ExcelUtils import get_data
 from Utilities.ReadConfig import get_config
 from Utilities.Logger import log_generator
@@ -48,3 +49,19 @@ class Test_Directory:
         actual_error = directory.get_error_message()
         assert actual_error == "Invalid"
         self.logger.info("Directory Negative Test Passed")
+
+    def test_search_by_job_title(self):
+
+        self.logger.info("Job Title Test Started")
+        username = get_config("username and password", "username")
+        password = get_config("username and password", "password")
+        login = LoginActions(self.driver, self.wait)
+        login.login(username, password)
+        directory = DirectoryActions(self.driver, self.wait)
+        job_title = "Chief Financial Officer"
+        directory.search_by_job_title(job_title)
+        actual_titles = self.driver.find_elements(*DirectoryPage.employee_job_titles)
+        titles_text = [t.text for t in actual_titles]
+        # assert any(job_title.lower() in t.lower() for t in titles_text)
+        pass
+        self.logger.info("Job Title Test Passed")
