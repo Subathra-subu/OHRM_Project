@@ -5,6 +5,7 @@ from Utilities.ReadConfig import get_config
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from Utilities.ExcelUtils import get_data
+import time
 
 class Recruit_VacanciesActions(BaseActions):
     
@@ -52,7 +53,11 @@ class Recruit_VacanciesActions(BaseActions):
             
             self.logger.info("Vacancy title entered")
             
-            self.click(Recruit_VacanciesPage.job_title)
+            self.js_click(Recruit_VacanciesPage.job_title)
+
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+
+            self.click(Recruit_VacanciesPage.job_option)
             
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
             
@@ -62,7 +67,7 @@ class Recruit_VacanciesActions(BaseActions):
             
             self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
             
-            self.wait_for_visibility(Recruit_VacanciesPage)
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
             
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
             
@@ -145,3 +150,49 @@ class Recruit_VacanciesActions(BaseActions):
             self.logger.exception(e)
             
             raise
+    
+    def searchVacancy(self):
+        
+        actions = ActionChains(self.driver)
+        
+        try:
+            
+            self.click(Recruit_VacanciesPage.job_title)
+            
+            self.is_visible(Recruit_VacanciesPage.list_box)
+            
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+            
+            self.click(Recruit_VacanciesPage.vacancy)
+
+            self.is_visible(Recruit_VacanciesPage.list_box)
+            
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+            
+            self.click(Recruit_VacanciesPage.hiring_manager)
+            
+            self.is_visible(Recruit_VacanciesPage.list_box)
+
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+            
+            self.click(Recruit_VacanciesPage.status)
+            
+            self.is_visible(Recruit_VacanciesPage.list_box)
+            
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+            
+            self.click(Recruit_VacanciesPage.search)
+            
+            expected = self.get_text(Recruit_VacanciesPage.job_title) 
+            
+            return Recruit_VacanciesPage.records[1] == expected
+            
+        except Exception as e:
+
+            self.logger.error("Valid Search test failed")
+            
+            self.logger.exception(e)
+            
+            raise
+            
+        
