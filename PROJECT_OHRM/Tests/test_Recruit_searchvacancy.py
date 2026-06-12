@@ -1,11 +1,11 @@
 import pytest
 from Actions.Recruit_VacanciesActions import Recruit_VacanciesActions
-from PROJECT_OHRM.Tests.test_Recruit_addvacancy import Testaddvacancy
 from Utilities.Logger import log_generator
+import time
 
 @pytest.mark.usefixtures("test_setup_and_down")
 
-class Testsearchvacancy(Testaddvacancy):
+class Testsearchvacancy():
     
     logger = log_generator()
     
@@ -17,6 +17,7 @@ class Testsearchvacancy(Testaddvacancy):
         
         vacancyAction.login_entervacancy()
         
-        assert vacancyAction.searchVacancy() is True
+        assert vacancyAction.searchVacancy()==True
         
         self.logger.info("Test Ended")
+      

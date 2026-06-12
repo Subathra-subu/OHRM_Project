@@ -4,13 +4,13 @@ from Pages.BasePage import BasePage
 
 class Recruit_CandidatePage(BasePage):
     
-    job_title = (By.XPATH , "(//div[@class='oxd-select-text--after'])[1]/child::*" )
+    job_title = (By.XPATH,"(//div[@class='oxd-select-text--after'])[1]/preceding-sibling::*")
     
-    vacancy = (By.XPATH , "(//div[@class='oxd-select-text--after'])[2]/child::*")
+    vacancy = (By.XPATH , "(//div[@class='oxd-select-text--after'])[2]/preceding-sibling::*")
     
-    hiring_managaer = (By.XPATH,"(//div[@class='oxd-select-text--after'])[3]/child::*") 
+    hiring_manager = (By.XPATH,"(//div[@class='oxd-select-text--after'])[3]/preceding-sibling::*") 
     
-    status = (By.XPATH,"(//div[@class='oxd-select-text--after'])[4]/child::*") 
+    status = (By.XPATH,"(//div[@class='oxd-select-text--after'])[4]/preceding-sibling::*") 
     
     candidate_name = (By.XPATH,"//div[@class='oxd-autocomplete-text-input--before']/following-sibling::input")
     
