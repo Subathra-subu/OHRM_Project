@@ -3,7 +3,8 @@ from Pages.PIMpage import PIMpage
 from Pages.BasePage import BasePage
 from Actions.LoginActions import LoginActions
 from Utilities.ReadConfig import get_config
-import time
+from selenium.webdriver.support import expected_conditions as EC
+
 class pimActions(BaseActions):
 
     def __init__(self, driver, wait):
@@ -54,34 +55,36 @@ class pimActions(BaseActions):
             raise
     def search_employee(self, first_name, middle_name, last_name, username, password, confirm_password):
         try:
-            
             self.logger.info("PIM - Creating employee before searching")
-            
-            
-            LoginActions.login(self,get_config(
-                "username and password",
-                "username"
-            )
-
-            ,get_config(
-                "username and password",
-                "password"
-            )
-)
+            LoginActions.login(self, get_config("username and password", "username"),
+                                    get_config("username and password", "password"))
            
-            
             self.js_click(BasePage.PIM)
 
             self.logger.info("PIM - Searching for the created employee")
             self.click(PIMpage.emp_list)
-            self.enter_text(PIMpage.employee_nmae,first_name )
             
+            self.enter_text(PIMpage.employee_nmae, first_name)
             self.click(PIMpage.search_emp)
-            self.click( PIMpage.user_area)
-            exp=self.get_attribute_lambda(PIMpage.fullname,"value")
+            
+            self.logger.info("Waiting dynamically for data tables to resolve...")
+            
+            self.wait.until(EC.presence_of_element_located(PIMpage.user_area))
+            
+            target_element = self.wait.until(EC.visibility_of_element_located(PIMpage.user_area))
+            
+            self.scroll_into_view(PIMpage.user_area)
+            
+            self.wait.until(EC.element_to_be_clickable(target_element))
+            self.js_click(PIMpage.user_area)
+            
+            self.logger.info("Successfully targeted user area element.")
+            
+            exp = self.get_attribute_lambda(PIMpage.fullname, "value")
             print(exp)
             return exp
+            
         except Exception as e:
-            self.logger.error("PIM - Search Employee Failed")
+            self.logger.error("PIM - Search Employee Failed due to target row load mismatch")
             self.logger.exception(e)
             raise
