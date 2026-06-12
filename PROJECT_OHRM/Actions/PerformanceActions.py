@@ -67,6 +67,20 @@ class PerformanceActions(BaseActions):
         self.js_click(PerformancePage.click_title)
         self.click(PerformancePage.search)
         return self.get_text(PerformancePage.search_msg)
+    
+    def invalid_search(self):
+
+        actions = ActionChains(self.driver)
+        self.click(BasePage.performance)
+        self.js_click(PerformancePage.configure)
+        self.click(PerformancePage.kip_select)
+        self.click(PerformancePage.job_title)
+        actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+        self.js_click(PerformancePage.search_title)
+        self.click(PerformancePage.search)
+        return self.get_text(PerformancePage.invalid_search)
+        
+
  
    
 
