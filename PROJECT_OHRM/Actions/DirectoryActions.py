@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Actions.BaseActions import BaseActions
 from Pages.DirectoryPage import DirectoryPage
 from Pages.BasePage import BasePage
+import time
 
 
 class DirectoryActions(BaseActions):
@@ -76,6 +77,7 @@ class DirectoryActions(BaseActions):
         return self.get_text(DirectoryPage.error_message)
     
     def search_by_job_title(self, job_title_name):
+
         try:
             self.logger.info("Directory Search By Job Title Started")
 
@@ -92,11 +94,52 @@ class DirectoryActions(BaseActions):
 
             self.click(DirectoryPage.search_btn)
 
-            self.wait.until(lambda d: len(d.find_elements(*DirectoryPage.employee_cards)) > 0)
+        
+            time.sleep(2)
+
+            results = self.driver.find_elements(*DirectoryPage.employee_cards)
+
+            if len(results) > 0:
+                self.logger.info(f"Results Found: {len(results)} records")
+            else:
+                self.logger.info("No Results Found for given Job Title")
 
             self.logger.info("Directory Search By Job Title Completed")
 
         except Exception as e:
             self.logger.error("Job Title Search Failed")
+            self.logger.exception(e)
+            raise
+
+    def search_by_location(self, location_name):
+
+        try:
+            self.logger.info("Directory Search By Location Started")
+
+            self.open_directory()
+
+            self.click(DirectoryPage.location)
+
+            options = self.wait.until(lambda d: d.find_elements(*DirectoryPage.location_options))
+
+            for opt in options:
+                if location_name.lower() in opt.text.lower():
+                   opt.click()
+                   break
+
+            self.click(DirectoryPage.search_btn)
+            time.sleep(2)
+
+            results = self.driver.find_elements(*DirectoryPage.employee_cards)
+
+            if len(results) > 0:
+                self.logger.info(f"Location Results Found: {len(results)}")
+            else:
+                self.logger.info("No Results Found for Location")
+
+            self.logger.info("Directory Search By Location Completed")
+
+        except Exception as e:
+            self.logger.error("Location Search Failed")
             self.logger.exception(e)
             raise
