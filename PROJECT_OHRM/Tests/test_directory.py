@@ -2,7 +2,7 @@ import pytest
 
 from Actions.LoginActions import LoginActions
 from Actions.DirectoryActions import DirectoryActions
-
+from Utilities.ExcelUtils import get_data
 from Utilities.ReadConfig import get_config
 from Utilities.Logger import log_generator
 
@@ -19,7 +19,12 @@ class Test_Directory:
             login.login(username,password)
 
             directory = DirectoryActions(self.driver,self.wait)
-            directory.search_employee("Ranga")
+            data = get_data("test_data/DirectoryData.xlsx","EmployeeSearch")
+
+            for row in data:
+                employee_name = row[0]
+                directory.search_employee(employee_name)
+            
             actual_names = directory.get_employee_name()
             assert directory.verify_results_displayed()
             assert any("Ranga"
