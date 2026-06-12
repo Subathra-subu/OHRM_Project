@@ -2,7 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
-from selenium.webdriver.common.keys import Keys
+
 
 class BaseActions:
 
@@ -195,9 +195,49 @@ class BaseActions:
             self.logger.info(f"Waiting dynamically for URL to contain: '{expected_partial_url}'")
             self.wait.until(EC.url_contains(expected_partial_url))
             return self.driver.current_url
-            
         except Exception as e:
             self.logger.error(f"URL failed to transition to target containing: '{expected_partial_url}'")
             self.logger.exception(e)
             raise
-   
+    def select_first_dropdown_option_via_js(self, listbox_locator):
+        """
+        Waits for the dropdown listbox container wrapper, validates that it has
+        fully painted text records instead of temporary loading messages,
+        and dispatches a hardware event sequence onto its first child element.
+        """
+        dropdown_element = self.wait_for_visibility(listbox_locator)
+        
+       
+        WebDriverWait(self.driver, 7).until(
+            lambda d: "searching" not in d.find_element(*listbox_locator).text.lower()
+        )
+        
+        self.logger.info("Dispatching custom browser lifecycle events onto the first dropdown option element...")
+        self.driver.execute_script(
+            """
+            var dropdown = arguments[0];
+            if (dropdown && dropdown.firstElementChild) {
+                var targetItem = dropdown.firstElementChild;
+                var eventConfig = { bubbles: true, cancelable: true, view: window };
+                
+                // Complete sequence mirroring structural mouse interactions
+                targetItem.dispatchEvent(new PointerEvent('pointerdown', eventConfig));
+                targetItem.dispatchEvent(new MouseEvent('mousedown', eventConfig));
+                targetItem.dispatchEvent(new PointerEvent('pointerup', eventConfig));
+                targetItem.dispatchEvent(new MouseEvent('mouseup', eventConfig));
+                targetItem.dispatchEvent(new MouseEvent('click', eventConfig));
+            } else {
+                console.error("DOM Error: target listbox wrapper or option elements are absent.");
+            }
+            """, 
+            dropdown_element
+        )
+
+    def wait_for_element_value_attribute(self, locator, timeout=10):
+        """
+        Dynamic fluent wait wrapper that pauses execution until an element's 'value' attribute 
+        is populated with text data (clearing default blank states).
+        """
+        return WebDriverWait(self.driver, timeout).until(
+            lambda d: d.find_element(*locator).get_attribute("value").strip() != ""
+        )
