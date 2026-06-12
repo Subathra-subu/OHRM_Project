@@ -6,7 +6,7 @@ from Utilities.Logger import log_generator
 
 
 @pytest.mark.usefixtures("test_setup_and_down")
-class Test_Performance:
+class Test_PerformanceAdd:
 
     logger = log_generator()
 
