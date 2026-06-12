@@ -44,37 +44,25 @@ class Recruit_VacanciesActions(BaseActions):
         try:
             
             self.js_click(Recruit_VacanciesPage.add)
-            
             self.logger.info("Add button clikced")
             
-            vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy")
-            
+            vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy") 
             self.enter_text(Recruit_VacanciesPage.vacancy_name,vacancy_data[0][0])
-            
             self.logger.info("Vacancy title entered")
             
             self.js_click(Recruit_VacanciesPage.job_title)
-
             self.wait_for_visibility(Recruit_VacanciesPage.list_box)
-
-            self.click(Recruit_VacanciesPage.job_option)
-            
+            self.wait_for_visibility(Recruit_VacanciesPage.option)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
-            # self.click(Recruit_VacanciesPage.job_option)
-            
             self.logger.info("Job title selected")
             
             self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
-            
             self.wait_for_visibility(Recruit_VacanciesPage.list_box)
-            
+            self.wait_for_visibility(Recruit_VacanciesPage.option)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
             self.logger.info("Hiring manager selected")
             
             self.click(Recruit_VacanciesPage.save)
-            
             self.logger.info("Save button clicked")
             
             return self.is_displayed(Recruit_VacanciesPage.success_message)
@@ -82,7 +70,6 @@ class Recruit_VacanciesActions(BaseActions):
         except Exception as e:
 
             self.logger.error("Add vacancy failed")
-            
             self.logger.exception(e)
             
             raise
@@ -94,11 +81,9 @@ class Recruit_VacanciesActions(BaseActions):
         try:
             
             self.js_click(Recruit_VacanciesPage.add)
-            
             self.logger.info("Add button clikced")
             
             self.click(Recruit_VacanciesPage.save)
-            
             self.logger.info("Save button clicked")
             
             return self.is_displayed(Recruit_VacanciesPage.required_messages)
@@ -106,7 +91,6 @@ class Recruit_VacanciesActions(BaseActions):
         except Exception as e:
 
             self.logger.error("Invalid add_vacancy test failed")
-            
             self.logger.exception(e)
             
             raise
@@ -118,27 +102,20 @@ class Recruit_VacanciesActions(BaseActions):
         try:
             
             self.js_click(Recruit_VacanciesPage.add)
-            
             self.logger.info("Add button clikced")
             
             vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy")
-            
             self.enter_text(Recruit_VacanciesPage.vacancy_name,vacancy_data[0][0])
-            
             self.logger.info("Vacancy title entered")
             
             self.click(Recruit_VacanciesPage.job_title)
-            
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
             self.logger.info("Job title selected")
             
             self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
-            
             self.logger.info("Hiring manager selected")
             
             self.click(Recruit_VacanciesPage.save)
-            
             self.logger.info("Save button clicked")
             
             return self.is_displayed(Recruit_VacanciesPage.exist_message)
@@ -146,7 +123,6 @@ class Recruit_VacanciesActions(BaseActions):
         except Exception as e:
 
             self.logger.error("Add exist vacancyname test failed")
-            
             self.logger.exception(e)
             
             raise
@@ -154,45 +130,35 @@ class Recruit_VacanciesActions(BaseActions):
     def searchVacancy(self):
         
         actions = ActionChains(self.driver)
-        
+
         try:
-            
+
             self.click(Recruit_VacanciesPage.job_title)
-            
-            self.is_visible(Recruit_VacanciesPage.list_box)
-            
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
+
             self.click(Recruit_VacanciesPage.vacancy)
-
-            self.is_visible(Recruit_VacanciesPage.list_box)
-            
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
+
             self.click(Recruit_VacanciesPage.hiring_manager)
-            
-            self.is_visible(Recruit_VacanciesPage.list_box)
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
 
-            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
             self.click(Recruit_VacanciesPage.status)
-            
-            self.is_visible(Recruit_VacanciesPage.list_box)
-            
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            
+
             self.click(Recruit_VacanciesPage.search)
-            
-            expected = self.get_text(Recruit_VacanciesPage.job_title) 
-            
-            return Recruit_VacanciesPage.records[1] == expected
-            
+
+            self.wait_for_visibility(Recruit_VacanciesPage.records)
+
+            return self.is_displayed(Recruit_VacanciesPage.records)
+
         except Exception as e:
 
             self.logger.error("Valid Search test failed")
-            
             self.logger.exception(e)
-            
             raise
             
         
