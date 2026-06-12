@@ -34,6 +34,27 @@ class Test_PerformanceSearch:
             self.logger.error(f"Test Failed: {e}")
             raise
 
+    def test_invalid_search(self):
 
+         try:
+
+            self.logger.info("Scenario started")
+
+            login = LoginActions(self.driver, self.wait)
+
+            login.login(
+                get_config("username and password", "username"),
+                get_config("username and password", "password")
+            )
+            performance = PerformanceActions(self.driver, self.wait)
+            ans=performance.invalid_search()
+            assert ans == "No Records Found"
+
+            self.logger.info("KPI Search Not Success!")
+
+         except Exception as e:
+
+            self.logger.error(f"Test Failed: {e}")
+            raise
             
    
