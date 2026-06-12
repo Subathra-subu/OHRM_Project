@@ -193,38 +193,9 @@ class BaseActions:
     def wait_for_url_contains(self, expected_partial_url):
         try:
             self.logger.info(f"Waiting dynamically for URL to contain: '{expected_partial_url}'")
-
-    def get_attribute_lambda(self, locator, attribute):
-         try:
-            by_type, selector = locator
-
-            if attribute == "value":
-                def check_value(d):
-                    try:
-                        element = d.find_element(by_type, selector)
-                        if element.is_displayed():
-                            val = element.get_attribute("value")
-                            if val is not None and val.strip() != "":
-                                return val
-                        return False
-                    except (StaleElementReferenceException, NoSuchElementException):
-                        return False
-
-                return self.wait.until(check_value)
-            
-    def check_url(d):
-                try:
-                    current_url = d.current_url
-                    if current_url and expected_partial_url in current_url:
-                        return current_url
-                    return False
-                except Exception:
-                    return False
-
-            return self.wait.until(check_url)
-
+            self.wait.until(EC.url_contains(expected_partial_url))
+            return self.driver.current_url
         except Exception as e:
             self.logger.error(f"URL failed to transition to target containing: '{expected_partial_url}'")
             self.logger.exception(e)
             raise
-     
