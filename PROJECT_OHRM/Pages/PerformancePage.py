@@ -11,6 +11,6 @@ class PerformancePage:
     success_msg = (By.XPATH,"//p[text()='Successfully Saved']")
     kpi_required=(By.XPATH,"//label[text()='Key Performance Indicator']/following::span[text()='Required'][1]")
     job_required=(By.XPATH,"//label[text()='Job Title']/following::span[text()='Required'][1]")
-    max_rate=(By.XPATH,"//label[text()='Max Rating']/ancestor::div[contains(@class,'oxd-input-group')]//input")
+    max_rate=(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[4]")
     max_err=(By.XPATH,"//span[text()='Should be a number between 0-100']")
     
