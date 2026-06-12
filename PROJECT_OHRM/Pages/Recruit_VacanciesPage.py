@@ -12,4 +12,14 @@ class Recruit_VacanciesPage(Recruit_CandidatePage):
     
     save = (By.XPATH,"//button[@type='submit']")
     
-    edit_vacancy = (By.XPATH,"//h6[text()='Edit Vacancy']")
+    success_message = (By.XPATH,"//p[text()='Successfully Saved']")
+    
+    required_messages = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::span[text()='Required']")
+    
+    exist_message = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::span[text()='Already exists']")
+    
+    list_box = (By.XPATH,"//div[@role='listbox']")
+    
+    job_option = (By.XPATH,"//div[@role='option']//span[text()='Account Assistant']")
+    
+    searching = (By.XPATH,"//div[text()='Searching....']")
