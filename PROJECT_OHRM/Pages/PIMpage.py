@@ -21,3 +21,4 @@ class PIMpage:
      emp_list = (By.XPATH,"//div[@class='oxd-topbar-body']/descendant::a[1]")
      personal_details = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::h6[contains(@class, 'oxd-text oxd-text--h6 orangehrm-main-title')][1]")
      form_loader = (By.CLASS_NAME, "oxd-form-loader")
+     lname_err_msg = (By.XPATH,"//div[@class='--name-grouped-field']/descendant::span")
