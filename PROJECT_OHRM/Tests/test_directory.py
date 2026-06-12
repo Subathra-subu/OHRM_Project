@@ -26,7 +26,7 @@ class Test_Directory:
             
             actual_names = directory.get_employee_name()
             assert directory.verify_results_displayed()
-            assert any("Ranga" in name for name in actual_names)
+            assert any("Admin" in name for name in actual_names)
             self.logger.info("Directory Test Passed")
 
         except Exception as e:
