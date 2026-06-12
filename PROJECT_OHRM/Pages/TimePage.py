@@ -16,6 +16,8 @@ class TimePage :
 
     popup_message = (By.XPATH, "//div[contains(@class,'oxd-toast') and contains(@class,'oxd-toast--success')]")
 
+    ALREADY_EXISTS_MESSAGE = (By.XPATH, "//span[contains(@class,'oxd-input-field-error-message')]")
+
 
 
 
