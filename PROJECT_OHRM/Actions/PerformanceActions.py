@@ -18,5 +18,20 @@ class PerformanceActions(BaseActions):
         actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
         self.js_click(PerformancePage.click_title)
         self.js_click(PerformancePage.submit)
+        return self.get_text(PerformancePage.success_msg)
+    def invalid_add(self,kipinvalid):
+        actions = ActionChains(self.driver)
+        self.click(BasePage.performance)
+        self.js_click(PerformancePage.configure)
+        self.click(PerformancePage.kip_select)
+        self.js_click(PerformancePage.add)
+        self.enter_text(PerformancePage.kip,kipinvalid)
+        self.click(PerformancePage.job_title)
+        actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+        self.js_click(PerformancePage.click_title)
+        self.js_click(PerformancePage.submit)
+        return self.get_text(PerformancePage.required)
+
+
         
 
