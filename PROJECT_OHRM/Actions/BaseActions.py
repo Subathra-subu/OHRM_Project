@@ -1,6 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 
 
 class BaseActions:
@@ -177,3 +178,53 @@ class BaseActions:
 
         except:
             return False
+    
+    def wait_for_invisibility(self, locator, timeout=10):
+
+        try:
+            WebDriverWait(self.driver,timeout).until( EC.invisibility_of_element_located(locator))
+            self.logger.info("Element Became Invisible")
+
+        except Exception as e:
+            self.logger.error("Element Still Visible")
+            self.logger.exception(e)
+            raise
+
+    def wait_for_url_contains(self, expected_partial_url):
+        try:
+            self.logger.info(f"Waiting dynamically for URL to contain: '{expected_partial_url}'")
+
+    def get_attribute_lambda(self, locator, attribute):
+         try:
+            by_type, selector = locator
+
+            if attribute == "value":
+                def check_value(d):
+                    try:
+                        element = d.find_element(by_type, selector)
+                        if element.is_displayed():
+                            val = element.get_attribute("value")
+                            if val is not None and val.strip() != "":
+                                return val
+                        return False
+                    except (StaleElementReferenceException, NoSuchElementException):
+                        return False
+
+                return self.wait.until(check_value)
+            
+    def check_url(d):
+                try:
+                    current_url = d.current_url
+                    if current_url and expected_partial_url in current_url:
+                        return current_url
+                    return False
+                except Exception:
+                    return False
+
+            return self.wait.until(check_url)
+
+        except Exception as e:
+            self.logger.error(f"URL failed to transition to target containing: '{expected_partial_url}'")
+            self.logger.exception(e)
+            raise
+     
