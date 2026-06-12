@@ -74,3 +74,29 @@ class DirectoryActions(BaseActions):
 
     def get_error_message(self):
         return self.get_text(DirectoryPage.error_message)
+    
+    def search_by_job_title(self, job_title_name):
+        try:
+            self.logger.info("Directory Search By Job Title Started")
+
+            self.open_directory()
+
+            self.click(DirectoryPage.job_title)
+
+            options = self.wait.until(lambda d: d.find_elements(*DirectoryPage.job_title_options))
+
+            for option in options:
+                if job_title_name.strip().lower() == option.text.strip().lower():
+                    option.click()
+                    break
+
+            self.click(DirectoryPage.search_btn)
+
+            self.wait.until(lambda d: len(d.find_elements(*DirectoryPage.employee_cards)) > 0)
+
+            self.logger.info("Directory Search By Job Title Completed")
+
+        except Exception as e:
+            self.logger.error("Job Title Search Failed")
+            self.logger.exception(e)
+            raise
