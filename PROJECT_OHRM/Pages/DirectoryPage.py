@@ -8,12 +8,16 @@ class DirectoryPage:
 
     location = (By.XPATH, "//label[text()='Location']/parent::div/following-sibling::div//div[contains(@class,'oxd-select-text')]")
 
-    search_btn = (By.XPATH, "//button[normalize-space()='Search']")
+    search_btn = (By.XPATH,"//button[normalize-space()='Search']")
 
-    reset_btn = (By.XPATH, "//button[normalize-space()='Reset']")
+    reset_btn = (By.XPATH,"//button/span[normalize-space()='Reset']/parent::button")
 
-    employee_cards = (By.XPATH, "//div[contains(@class,'orangehrm-directory-card')]")
+    employee_cards = (By.XPATH,"//div[contains(@class,'orangehrm-directory-card')]")
 
-    employee_name_results = (By.XPATH, "//p[contains(@class,'orangehrm-directory-card-header')]")
+    employee_name_results = (By.XPATH,"//div[contains(@class,'orangehrm-directory-card')]//p[contains(@class,'orangehrm-directory-card-header')]")
 
-    auto_suggestion = (By.XPATH, "//div[@role='listbox']//span")
+    auto_suggestion = (By.XPATH,"//div[@role='listbox']/descendant::span")
+
+    no_record_message = (By.XPATH,"//div[contains(@class,'oxd-table-filter')]//following::span[normalize-space()='No Records Found']")
+
+    error_message = (By.XPATH,"//input/ancestor::div[contains(@class,'oxd-input-group')]//span[contains(@class,'oxd-input-field-error-message')]")
