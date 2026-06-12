@@ -4,7 +4,6 @@ from Pages.BasePage import BasePage
 from Actions.LoginActions import LoginActions
 from Utilities.ReadConfig import get_config
 from selenium.webdriver.support import expected_conditions as EC
-import time
 class pimActions(BaseActions):
 
     def __init__(self, driver, wait):
