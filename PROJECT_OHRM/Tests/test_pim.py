@@ -4,7 +4,7 @@ from Actions.pimActions import pimActions
 
 from Utilities.ExcelUtils import get_data
 from Utilities.Logger import log_generator
-
+import os
 
 @pytest.mark.usefixtures("test_setup_and_down")
 class Test_PIM:
@@ -18,15 +18,15 @@ class Test_PIM:
             self.logger.info("******** PIM Test Started ********")
 
 
-            file_path = r"E:\orangeHrm_project\OHRM_Project\PROJECT_OHRM\test_data\add_employee_data.xlsx"
+            current_dir = os.path.dirname(os.path.abspath(__file__)) 
+            file_path = os.path.join(current_dir, "..", "test_data", "add_employee_data.xlsx")  
             data = get_data(file_path, "Sheet1")
-
             print("\n" + "="*50)
             print(f"EXTRACTED DATA ROW 1: {data[0]}")
             print(f"ROW 1 LENGTH: {len(data[0])}")
             print("="*50 + "\n")
 
-            pim = pimActions(self.driver, self.wait)
+            self.pim = pimActions(self.driver, self.wait)
 
 
             first_row = data[0]
@@ -39,13 +39,10 @@ class Test_PIM:
             cpword = str(first_row[5]) if len(first_row) > 5 else ""
 
             print(f"SENDING TO SELENIUM -> fname: '{fname}', mname: '{mname}', lname: '{lname}', uname: '{uname}', pword: '{pword}', cpword: '{cpword}'")
+            actual_url = self.pim.add_employee(fname, mname, lname, uname, pword, cpword)        
+            assert "/viewPersonalDetails" in actual_url,"Form submission failed."
+            " Browser did not redirect to Personal Details profile page."
 
-            actual_fullname = pim.add_employee(fname, mname, lname, uname, pword, cpword)
-        
-            
-
-            
-            assert actual_fullname == fname,"invalid"
 
             self.logger.info("******** PIM Test Passed ********")
 

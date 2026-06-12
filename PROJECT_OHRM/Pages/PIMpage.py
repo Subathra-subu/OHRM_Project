@@ -19,3 +19,4 @@ class PIMpage:
      user_area = (By.XPATH,"//div[@class='oxd-table-card']")
      fullname = (By.XPATH,"//input[@name='firstName']")
      emp_list = (By.XPATH,"//div[@class='oxd-topbar-body']/descendant::a[1]")
+     personal_details = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::h6[contains(@class, 'oxd-text oxd-text--h6 orangehrm-main-title')][1]")

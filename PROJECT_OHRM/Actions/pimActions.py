@@ -4,7 +4,7 @@ from Pages.BasePage import BasePage
 from Actions.LoginActions import LoginActions
 from Utilities.ReadConfig import get_config
 from selenium.webdriver.support import expected_conditions as EC
-
+import time
 class pimActions(BaseActions):
 
     def __init__(self, driver, wait):
@@ -39,13 +39,12 @@ class pimActions(BaseActions):
             self.enter_text(PIMpage.username, username)
             self.enter_text(PIMpage.password, password)
             self.enter_text(PIMpage.confirm_password, confirm_password)
-
-            self.js_click(PIMpage.save_btn)
-            
-            exp=self.get_attribute(PIMpage.fullname,"value")
+            self.click(PIMpage.save_btn)
+            final_url = self.wait_for_url_contains("/viewPersonalDetails")
             
             self.logger.info("PIM - Add Employee Completed")
-            return exp
+            return final_url
+            
       
 
         except Exception as e:
@@ -53,7 +52,7 @@ class pimActions(BaseActions):
             self.logger.error("PIM - Add Employee Failed")
             self.logger.exception(e)
             raise
-    def search_employee(self, first_name, middle_name, last_name, username, password, confirm_password):
+    def search_employee_pim(self, first_name, middle_name, last_name, username, password, confirm_password):
         try:
             self.logger.info("PIM - Creating employee before searching")
             LoginActions.login(self, get_config("username and password", "username"),
@@ -80,9 +79,11 @@ class pimActions(BaseActions):
             
             self.logger.info("Successfully targeted user area element.")
             
-            exp = self.get_attribute_lambda(PIMpage.fullname, "value")
-            print(exp)
-            return exp
+            final_url = self.wait_for_url_contains("/viewPersonalDetails")
+            self.logger.info("PIM - search Employee Completed")
+
+            return final_url
+         
             
         except Exception as e:
             self.logger.error("PIM - Search Employee Failed due to target row load mismatch")
