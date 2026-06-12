@@ -212,7 +212,7 @@ class BaseActions:
 
                 return self.wait.until(check_value)
             
-        def check_url(d):
+    def check_url(d):
                 try:
                     current_url = d.current_url
                     if current_url and expected_partial_url in current_url:
