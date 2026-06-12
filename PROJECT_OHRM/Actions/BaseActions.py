@@ -190,28 +190,12 @@ class BaseActions:
             self.logger.exception(e)
             raise
 
-
-    def get_attribute_lambda(self, locator, attribute):
-         try:
-            by_type, selector = locator
-
-            if attribute == "value":
-                def check_value(d):
-                    try:
-                        element = d.find_element(by_type, selector)
-                        if element.is_displayed():
-                            val = element.get_attribute("value")
-                            if val is not None and val.strip() != "":
-                                return val
-                        return False
-                    except (StaleElementReferenceException, NoSuchElementException):
-                        return False
-
-                return self.wait.until(check_value)
-            
-            self.wait.until(EC.visibility_of_element_located((by_type, selector)))
-            return self.driver.find_element(by_type, selector).get_attribute(attribute)
-
-         except Exception as e:
+    def wait_for_url_contains(self, expected_partial_url):
+        try:
+            self.logger.info(f"Waiting dynamically for URL to contain: '{expected_partial_url}'")
+            self.wait.until(EC.url_contains(expected_partial_url))
+            return self.driver.current_url
+        except Exception as e:
+            self.logger.error(f"URL failed to transition to target containing: '{expected_partial_url}'")
             self.logger.exception(e)
             raise
