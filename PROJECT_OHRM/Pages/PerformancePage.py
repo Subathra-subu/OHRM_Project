@@ -13,4 +13,9 @@ class PerformancePage:
     job_required=(By.XPATH,"//label[text()='Job Title']/following::span[text()='Required'][1]")
     max_rate=(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[4]")
     max_err=(By.XPATH,"//span[text()='Should be a number between 0-100']")
+    search=(By.XPATH,'//button[@type="reset"]//following-sibling::button[@type="submit"]')
+    search_msg=(By.XPATH,'//div[text()="Account Assistant"]')
+    invalid_search=(By.XPATH,'//span[text()="No Records Found"]')
+    search_title=(By.XPATH,"//div[@role='listbox']//span[text()='Automation Tester']")
+
     

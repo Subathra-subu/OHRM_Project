@@ -2,7 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
-
+from selenium.webdriver.common.keys import Keys
 
 class BaseActions:
 
@@ -200,3 +200,4 @@ class BaseActions:
             self.logger.error(f"URL failed to transition to target containing: '{expected_partial_url}'")
             self.logger.exception(e)
             raise
+   
