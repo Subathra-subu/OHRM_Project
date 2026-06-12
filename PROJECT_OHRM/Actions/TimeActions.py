@@ -47,6 +47,9 @@ class TimeActions(BaseActions):
 
         self.enter_text(TimePage.CUSTOMER_NAME, customer_name)
 
+        
+        self.click(TimePage.DESCRIPTION)
+
         error = self.wait_for_visibility(TimePage.ALREADY_EXISTS_MESSAGE)
 
         assert error.is_displayed(), "Duplicate customer validation message not displayed"
