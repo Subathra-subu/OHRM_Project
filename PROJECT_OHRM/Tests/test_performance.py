@@ -23,11 +23,13 @@ class Test_Performance:
                 get_config("username and password", "password")
             )
 
-            kpi = get_config("performance", "kip")
+            kpi = get_config("performance", "kpi")
 
             performance = PerformanceActions(self.driver, self.wait)
 
-            performance.add_kpi(kpi)
+            msg = performance.add_kpi(kpi)
+
+            assert msg == "Successfully Saved"
 
             self.logger.info("KPI Added Successfully")
 
@@ -35,3 +37,28 @@ class Test_Performance:
 
             self.logger.error(f"Test Failed: {e}")
             raise
+    
+    def test_invalid_add(self):
+        try:
+            self.logger.info("Scenario started")
+            login = LoginActions(self.driver, self.wait)
+
+            login.login(
+                get_config("username and password", "username"),
+                get_config("username and password", "password")
+            )
+
+            kpiinvalid = get_config("performance", "kpiinvalid")
+            performance = PerformanceActions(self.driver, self.wait)
+            res=performance.invalid_add(kpiinvalid)
+            assert res == "Required"
+            self.logger.info("KPI Not Added Successfully")
+        except Exception as e:
+
+            self.logger.error(f"Test Failed: {e}")
+            raise
+          
+
+
+
+

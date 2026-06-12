@@ -8,3 +8,6 @@ class PerformancePage:
     job_title = (By.XPATH,"//div[@class='oxd-select-text-input']")
     click_title = (By.XPATH,'//div[text()="Account Assistant"]')
     submit = (By.XPATH,'//button[@type="submit"]')
+    success_msg = (By.XPATH,"//p[text()='Successfully Saved']")
+    required=(By.XPATH,'//span[@class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"]')
+
