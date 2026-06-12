@@ -1,10 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
-
 from Actions.BaseActions import BaseActions
 from Pages.DirectoryPage import DirectoryPage
 from Pages.BasePage import BasePage
-import time
-
 
 class DirectoryActions(BaseActions):
 
@@ -52,6 +49,16 @@ class DirectoryActions(BaseActions):
             self.logger.exception(e)
             raise
 
+    def search_invalid_employee(self, employee_name):
+
+        self.logger.info("Directory Invalid Search Started")
+        self.open_directory()
+        self.enter_text(DirectoryPage.employee_name, employee_name)
+        self.click(DirectoryPage.search_btn)
+
+    def get_error_message(self):
+        return self.get_text(DirectoryPage.error_message)
+    
     def verify_results_displayed(self):
 
         try:
@@ -65,17 +72,7 @@ class DirectoryActions(BaseActions):
 
         elements = self.driver.find_elements(*DirectoryPage.employee_name_results)
         return [e.text for e in elements]
-    
-    def search_invalid_employee(self, employee_name):
 
-        self.logger.info("Directory Invalid Search Started")
-        self.open_directory()
-        self.enter_text(DirectoryPage.employee_name,employee_name)
-        self.click(DirectoryPage.search_btn)
-
-    def get_error_message(self):
-        return self.get_text(DirectoryPage.error_message)
-    
     def search_by_job_title(self, job_title_name):
 
         try:
@@ -85,7 +82,9 @@ class DirectoryActions(BaseActions):
 
             self.click(DirectoryPage.job_title)
 
-            options = self.wait.until(lambda d: d.find_elements(*DirectoryPage.job_title_options))
+            options = self.wait.until(
+                lambda d: d.find_elements(*DirectoryPage.job_title_options)
+            )
 
             for option in options:
                 if job_title_name.strip().lower() == option.text.strip().lower():
@@ -94,17 +93,18 @@ class DirectoryActions(BaseActions):
 
             self.click(DirectoryPage.search_btn)
 
-        
-            time.sleep(2)
+            self.wait.until(lambda d: True)
 
             results = self.driver.find_elements(*DirectoryPage.employee_cards)
 
-            if len(results) > 0:
-                self.logger.info(f"Results Found: {len(results)} records")
+            if len(results) == 0:
+                self.logger.info("No Results Found for Job Title")
             else:
-                self.logger.info("No Results Found for given Job Title")
+                self.logger.info(f"Job Title Results Found: {len(results)}")
 
             self.logger.info("Directory Search By Job Title Completed")
+
+            return results   # keep for test assertion
 
         except Exception as e:
             self.logger.error("Job Title Search Failed")
@@ -120,25 +120,30 @@ class DirectoryActions(BaseActions):
 
             self.click(DirectoryPage.location)
 
-            options = self.wait.until(lambda d: d.find_elements(*DirectoryPage.location_options))
+            options = self.wait.until(
+                lambda d: d.find_elements(*DirectoryPage.location_options)
+            )
 
             for opt in options:
                 if location_name.lower() in opt.text.lower():
-                   opt.click()
-                   break
+                    opt.click()
+                    break
 
             self.click(DirectoryPage.search_btn)
-            time.sleep(2)
+
+            self.wait.until(lambda d: True)
 
             results = self.driver.find_elements(*DirectoryPage.employee_cards)
 
-            if len(results) > 0:
-                self.logger.info(f"Location Results Found: {len(results)}")
-            else:
+            if len(results) == 0:
                 self.logger.info("No Results Found for Location")
+            else:
+                self.logger.info(f"Location Results Found: {len(results)}")
 
             self.logger.info("Directory Search By Location Completed")
 
+            return results   # keep for assertion
+        
         except Exception as e:
             self.logger.error("Location Search Failed")
             self.logger.exception(e)
