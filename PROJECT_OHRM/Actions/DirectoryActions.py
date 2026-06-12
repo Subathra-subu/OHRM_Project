@@ -64,3 +64,13 @@ class DirectoryActions(BaseActions):
 
         elements = self.driver.find_elements(*DirectoryPage.employee_name_results)
         return [e.text for e in elements]
+    
+    def search_invalid_employee(self, employee_name):
+
+        self.logger.info("Directory Invalid Search Started")
+        self.open_directory()
+        self.enter_text(DirectoryPage.employee_name,employee_name)
+        self.click(DirectoryPage.search_btn)
+
+    def get_error_message(self):
+        return self.get_text(DirectoryPage.error_message)
