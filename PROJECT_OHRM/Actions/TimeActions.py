@@ -34,3 +34,23 @@ class TimeActions(BaseActions):
         self.logger.info(f"Customer Created Successfully : {customer_name}")
 
         return customer_name
+    
+    def add_existing_customer(self, customer_name):
+
+        self.click(BasePage.Time)
+
+        self.click(TimePage.PROJECT_INFO)
+
+        self.click(TimePage.CUSTOMER)
+
+        self.click(TimePage.ADD_BTN)
+
+        self.enter_text(TimePage.CUSTOMER_NAME, customer_name)
+
+        error = self.wait_for_visibility(TimePage.ALREADY_EXISTS_MESSAGE)
+
+        assert error.is_displayed(), "Duplicate customer validation message not displayed"
+
+        self.logger.info(error.text)
+
+        return error.text
