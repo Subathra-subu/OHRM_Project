@@ -54,29 +54,31 @@ class Test_Directory:
     def test_search_by_job_title(self):
 
         self.logger.info("Job Title Test Started")
+
         username = get_config("username and password", "username")
         password = get_config("username and password", "password")
+
         login = LoginActions(self.driver, self.wait)
         login.login(username, password)
+
         directory = DirectoryActions(self.driver, self.wait)
-        base = BaseActions(self.driver, self.wait)
+
         job_title = "Chief Financial Officer"
-        directory.search_by_job_title(job_title)
-        results = self.driver.find_elements(*DirectoryPage.employee_job_titles)
-        titles_text = [t.text.strip().lower() for t in results]
+
+        results = directory.search_by_job_title(job_title)
+
+        titles_text = [r.text.strip().lower() for r in results]
 
         self.logger.info(f"Job Title Results Found: {len(titles_text)}")
-        current_url = self.driver.current_url
-        self.logger.info(f"Current URL: {current_url}")
 
-        assert "directory" in current_url.lower(), "Not in Directory page"
+        assert "directory" in self.driver.current_url.lower()
 
-        if len(titles_text) == 0:
-            self.logger.info("No Job Title Results Found")
-            assert "directory" in current_url.lower()
-        else:
+        if len(results) > 0:
             assert any(job_title.lower() in t for t in titles_text), \
-            f"Job title '{job_title}' not found in results: {titles_text}"
+                f"Job title '{job_title}' not found in results"
+        else:
+            self.logger.info("No Job Title Results Found - valid state")
+
 
     def test_search_by_location(self):
 
@@ -89,24 +91,19 @@ class Test_Directory:
         login.login(username, password)
 
         directory = DirectoryActions(self.driver, self.wait)
-        base = BaseActions(self.driver, self.wait)
 
         location = "Canadian Regional HQ"
 
-        directory.search_by_location(location)
+        results = directory.search_by_location(location)
 
-        results = self.driver.find_elements(*DirectoryPage.employee_location_results)
         location_texts = [r.text.strip().lower() for r in results]
 
         self.logger.info(f"Location Results Found: {len(location_texts)}")
-        current_url = self.driver.current_url
-        self.logger.info(f"Current URL: {current_url}")
 
-        assert "directory" in current_url.lower(), "Not in Directory page"
+        assert "directory" in self.driver.current_url.lower()
 
-        if len(location_texts) == 0:
-            self.logger.info("No Location Results Found")
-            assert "directory" in current_url.lower()
-        else:
+        if len(results) > 0:
             assert any(location.lower() in loc for loc in location_texts), \
-            f"Location '{location}' not found in results: {location_texts}"
+                f"Location '{location}' not found in results"
+        else:
+            self.logger.info("No Location Results Found - valid state")
