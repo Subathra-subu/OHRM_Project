@@ -5,6 +5,7 @@ from Actions.pimActions import pimActions
 from Utilities.ExcelUtils import get_data
 from Utilities.Logger import log_generator
 import os
+import random
 
 @pytest.mark.usefixtures("test_setup_and_down")
 class Test_PIM:
@@ -35,6 +36,8 @@ class Test_PIM:
             mname  = str(first_row[1]) if len(first_row) > 1 else ""
             lname  = str(first_row[2]) if len(first_row) > 2 else ""
             uname  = str(first_row[3]) if len(first_row) > 3 else ""
+            if uname:
+                uname = f"{uname}{random.randint(100, 999)}"
             pword  = str(first_row[4]) if len(first_row) > 4 else ""
             cpword = str(first_row[5]) if len(first_row) > 5 else ""
 

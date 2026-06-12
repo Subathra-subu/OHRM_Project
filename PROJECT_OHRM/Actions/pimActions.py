@@ -40,6 +40,8 @@ class pimActions(BaseActions):
             self.enter_text(PIMpage.password, password)
             self.enter_text(PIMpage.confirm_password, confirm_password)
             self.click(PIMpage.save_btn)
+            self.logger.info("Waiting for OrangeHRM backend form-loader overlay to clear...")
+            self.wait_for_invisibility(PIMpage.form_loader)
             final_url = self.wait_for_url_contains("/viewPersonalDetails")
             
             self.logger.info("PIM - Add Employee Completed")
