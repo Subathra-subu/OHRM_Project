@@ -195,6 +195,7 @@ class BaseActions:
             self.logger.info(f"Waiting dynamically for URL to contain: '{expected_partial_url}'")
             self.wait.until(EC.url_contains(expected_partial_url))
             return self.driver.current_url
+            
         except Exception as e:
             self.logger.error(f"URL failed to transition to target containing: '{expected_partial_url}'")
             self.logger.exception(e)
