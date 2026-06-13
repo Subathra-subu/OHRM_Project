@@ -117,3 +117,49 @@ class pimActions(BaseActions):
             self.logger.error(f"PIM - Validation capture failed for {missing_field_type}")
             self.logger.exception(e)
             raise
+
+    def add_new_dropdown_custom_field(self, field_name):
+        try:
+            self.logger.info("PIM - Add Custom Field Flow Started")
+            LoginActions.login(
+                self, 
+                get_config("username and password", "username"),
+                get_config("username and password", "password")
+            )
+            
+            self.wait_for_visibility(BasePage.PIM)
+            self.js_click(BasePage.PIM)
+            
+            self.wait_for_visibility(PIMpage.configuration)
+            self.click(PIMpage.configuration)
+            
+            self.wait_for_visibility(PIMpage.custom_fields)
+            self.click(PIMpage.custom_fields)
+            
+            self.wait_for_visibility(PIMpage.add_custom_field)
+            self.click(PIMpage.add_custom_field)
+            
+            self.wait_for_visibility(PIMpage.field_name_input)
+            self.enter_text(PIMpage.field_name_input, field_name)
+            
+            self.click(PIMpage.screen_dropdown_trigger)
+            self.wait_for_visibility(PIMpage.dropdown_options_list)
+            self.click(PIMpage.first_dropdown_option)
+            self.wait_for_invisibility(PIMpage.dropdown_options_list)
+            
+            self.click(PIMpage.type_dropdown_trigger)
+            self.wait_for_visibility(PIMpage.dropdown_options_list)
+            self.click(PIMpage.first_dropdown_option)
+            self.wait_for_invisibility(PIMpage.dropdown_options_list)
+            
+            self.click(PIMpage.custom_field_save_btn)
+            self.wait_for_invisibility(PIMpage.form_loader)
+            
+            current_url = self.driver.current_url
+            self.logger.info(f"PIM - Custom Field Added Successfully. Redirected URL: {current_url}")
+            return current_url
+            
+        except Exception as e:
+            self.logger.error("PIM - Add Custom Field Flow Failed")
+            self.logger.exception(e)
+            raise
