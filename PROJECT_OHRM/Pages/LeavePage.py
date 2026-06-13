@@ -25,3 +25,5 @@ class LeavePage:
     error_message = (By.XPATH,"//span[contains(@class,'oxd-input-field-error-message')]")
 
     confirm_ok_button = (By.XPATH,"//div[contains(@class,'orangehrm-modal-footer')]//button[2]")
+
+    employee_required_msg = (By.XPATH,"//input[@placeholder='Type for hints...']/ancestor::div[contains(@class,'oxd-input-group')]//span[text()='Required']")
