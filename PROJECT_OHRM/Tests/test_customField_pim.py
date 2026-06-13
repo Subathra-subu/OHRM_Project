@@ -9,6 +9,7 @@ csv_file_path = os.path.join(current_dir, "..", "test_data", "custom_field_data.
 @pytest.mark.usefixtures("test_setup_and_down")
 class Test_customField_pim:
 
+    @pytest.mark.order(1)
     @pytest.mark.parametrize(
         "field_name", 
         get_data(csv_file_path)
@@ -28,6 +29,21 @@ class Test_customField_pim:
             actual_url = pim.add_new_dropdown_custom_field(target_field_name)
 
             assert expected_url_snippet in actual_url
+
+        except Exception as e:
+            raise
+
+    @pytest.mark.order(2)
+    def test_successfully_delete_first_custom_field(self):
+        try:
+            pim = pimActions(
+                self.driver, 
+                self.wait
+            )
+
+            is_deleted = pim.delete_first_custom_field_flow()
+
+            assert is_deleted, "The language-independent success notification container did not appear."
 
         except Exception as e:
             raise
