@@ -1,19 +1,27 @@
+import os
 import pytest
 
 from Actions.LoginActions import LoginActions
 from Actions.ChangePasswordActions import ChangePasswordActions
-
 from Utilities.ReadConfig import get_config
 from Utilities.CSVUtils import get_data
+
+
+csv_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "test_data",
+    "change_password.csv"
+)
 
 
 @pytest.mark.usefixtures("test_setup_and_down")
 class TestChangePassword:
 
     @pytest.mark.parametrize(
-    "old_password,new_password,confirm_password",
-    get_data("../test_data/change_password.csv")
-        )
+        "old_password,new_password,confirm_password",
+        get_data(csv_path)
+    )
     def test_change_password(
             self,
             old_password,
