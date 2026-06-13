@@ -9,5 +9,8 @@ class PerformancePage:
     click_title = (By.XPATH,'//div[text()="Account Assistant"]')
     submit = (By.XPATH,'//button[@type="submit"]')
     success_msg = (By.XPATH,"//p[text()='Successfully Saved']")
-    required=(By.XPATH,'//span[@class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"]')
-
+    kpi_required=(By.XPATH,"//label[text()='Key Performance Indicator']/following::span[text()='Required'][1]")
+    job_required=(By.XPATH,"//label[text()='Job Title']/following::span[text()='Required'][1]")
+    max_rate=(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[4]")
+    max_err=(By.XPATH,"//span[text()='Should be a number between 0-100']")
+    
