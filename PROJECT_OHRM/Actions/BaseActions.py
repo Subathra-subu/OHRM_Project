@@ -245,7 +245,7 @@ class BaseActions:
     def save_screenshot(self, screenshot_name):
         try:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            file_path = f"Screenshots/{screenshot_name}_{timestamp}.png"
+            file_path = f"TestFailures/Screenshots/{screenshot_name}_{timestamp}.png"
             self.driver.save_screenshot(file_path)
             self.logger.info(f"Screenshot saved successfully: {file_path}")
             return file_path

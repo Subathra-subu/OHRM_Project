@@ -24,4 +24,8 @@ class Recruit_VacanciesPage(Recruit_CandidatePage):
     
     records = (By.XPATH,"//div[@class='oxd-table orangehrm-vacancy-list']/child::div[@class='oxd-table-body']/descendant::div[@class='oxd-table-row oxd-table-row--with-border']/child::*")
     
-    option = (By.XPATH,"//div[@role='option']")
+    option = (By.XPATH,"//div[@role='option']//span[text()='QA Engineer']")
+    
+    edit_message = (By.XPATH,"//h6[text()='Edit Vacancy']")
+    
+    hiring_manager_option = (By.XPATH,"//div[@role='listbox']//div[@role='option'][1]")
