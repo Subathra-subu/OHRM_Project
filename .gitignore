@@ -1,3 +1,4 @@
+```gitignore
 # ==========================
 # Virtual Environment
 # ==========================
@@ -32,13 +33,20 @@ test.log
 # ==========================
 Reports/
 PROJECT_OHRM/Reports/
+allure-results/
+allure-report/
 
 # ==========================
 # Screenshots
 # ==========================
 TestFailures/
+TestFailures/Screenshots/
 Screenshots/
 PROJECT_OHRM/TestFailures/
+PROJECT_OHRM/TestFailures/Screenshots/
+
+# Ignore all PNG screenshots
+*.png
 
 # ==========================
 # Environment Variables
@@ -57,3 +65,4 @@ dist/
 # ==========================
 .DS_Store
 Thumbs.db
+```
