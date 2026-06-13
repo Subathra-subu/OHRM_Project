@@ -50,22 +50,20 @@ class Recruit_VacanciesActions(BaseActions):
             self.enter_text(Recruit_VacanciesPage.vacancy_name,vacancy_data[0][0])
             self.logger.info("Vacancy title entered")
             
-            self.js_click(Recruit_VacanciesPage.job_title)
-            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
-            self.wait_for_visibility(Recruit_VacanciesPage.option)
+            self.click(Recruit_VacanciesPage.job_title)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-            self.logger.info("Job title selected")
             
             self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
-            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
-            self.wait_for_visibility(Recruit_VacanciesPage.option)
-            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+
+            self.wait_for_visibility(Recruit_VacanciesPage.hiring_manager_option)
+
+            self.click(Recruit_VacanciesPage.hiring_manager_option)
             self.logger.info("Hiring manager selected")
             
-            self.click(Recruit_VacanciesPage.save)
+            self.js_click(Recruit_VacanciesPage.save)
             self.logger.info("Save button clicked")
             
-            return self.is_displayed(Recruit_VacanciesPage.success_message)
+            return self.is_displayed(Recruit_VacanciesPage.edit_message)
         
         except Exception as e:
 

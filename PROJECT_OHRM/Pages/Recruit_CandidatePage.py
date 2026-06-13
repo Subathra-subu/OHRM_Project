@@ -4,7 +4,7 @@ from Pages.BasePage import BasePage
 
 class Recruit_CandidatePage(BasePage):
     
-    job_title = (By.XPATH,"(//div[@class='oxd-select-text--after'])[1]/preceding-sibling::*")
+    job_title = (By.XPATH,"//label[contains(text(),'Job Title')]/following::div[contains(@class,'oxd-select-text')][1]")
     
     vacancy = (By.XPATH , "(//div[@class='oxd-select-text--after'])[2]/preceding-sibling::*")
     
