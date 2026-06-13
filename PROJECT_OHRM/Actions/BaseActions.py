@@ -2,7 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
-
+from datetime import datetime
 
 class BaseActions:
 
@@ -241,3 +241,15 @@ class BaseActions:
         return WebDriverWait(self.driver, timeout).until(
             lambda d: d.find_element(*locator).get_attribute("value").strip() != ""
         )
+        
+    def save_screenshot(self, screenshot_name):
+        try:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            file_path = f"Screenshots/{screenshot_name}_{timestamp}.png"
+            self.driver.save_screenshot(file_path)
+            self.logger.info(f"Screenshot saved successfully: {file_path}")
+            return file_path
+        except Exception as e:
+            self.logger.error("Failed to capture screenshot")
+            self.logger.exception(e)
+            raise
