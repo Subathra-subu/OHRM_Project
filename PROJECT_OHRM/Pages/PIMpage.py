@@ -22,3 +22,7 @@ class PIMpage:
      personal_details = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::h6[contains(@class, 'oxd-text oxd-text--h6 orangehrm-main-title')][1]")
      form_loader = (By.CLASS_NAME, "oxd-form-loader")
      lname_err_msg = (By.XPATH,"//div[@class='--name-grouped-field']/descendant::span")
+     configuration = (By.XPATH,"//li[@class='oxd-topbar-body-nav-tab --parent --visited'")
+     custom_fields = (By.XPATH,"//ul[@class='oxd-dropdown-menu']/descendant::a[2]")
+     add_custom_field = (By.XPATH,"//div[@class='orangehrm-custom-field-title']/following::button[1]")
+     

@@ -13,3 +13,4 @@ class MaintenancePage:
     form_loader = (By.XPATH, "//div[@class='oxd-form-loader']")
     password = (By.XPATH, "//input[@type='password']")
     confirm = (By.XPATH, "//button[@type='submit']")
+    err_msg = (By.XPATH, "//div[@class='oxd-form-row']/descendant::span")
