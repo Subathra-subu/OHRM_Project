@@ -39,17 +39,23 @@ class TestTime:
         print(f"Customer Created Successfully : {customer}")
 
     @pytest.mark.parametrize(
-        "customer_name,description",
+        "customer_prefix,description_prefix",
         [
             (
-                "sriram_" ,
+                "sriram_",
                 "Description_"
             )
         ]
     )
-    def test_add_existing_customer(self, customer_name, description):
+    def test_add_existing_customer(self, customer_prefix, description_prefix):
 
-        description = description + "".join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        customer_name = customer_prefix + "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=5)
+        )
+
+        description = description_prefix + "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=8)
+        )
 
         username = get_config("username and password", "username")
         password = get_config("username and password", "password")
@@ -59,6 +65,12 @@ class TestTime:
 
         time = TimeActions(self.driver, self.wait)
 
+        
+        customer = time.add_customer(customer_name, description)
+
+        print(f"Customer Created Successfully : {customer}")
+
+       
         message = time.add_existing_customer(customer_name)
 
-        print(f"Duplicate Customer Creation Attempted : {message}")
+        print(f"Duplicate Customer Validation : {message}")
