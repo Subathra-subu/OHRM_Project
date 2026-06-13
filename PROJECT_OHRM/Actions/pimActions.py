@@ -163,3 +163,38 @@ class pimActions(BaseActions):
             self.logger.error("PIM - Add Custom Field Flow Failed")
             self.logger.exception(e)
             raise
+
+    def delete_first_custom_field_flow(self):
+        try:
+            self.logger.info("PIM - Delete Custom Field Flow Started")
+            LoginActions.login(
+                self, 
+                get_config("username and password", "username"),
+                get_config("username and password", "password")
+            )
+            
+            self.wait_for_visibility(BasePage.PIM)
+            self.js_click(BasePage.PIM)
+            
+            self.wait_for_visibility(PIMpage.configuration)
+            self.click(PIMpage.configuration)
+            
+            self.wait_for_visibility(PIMpage.custom_fields)
+            self.click(PIMpage.custom_fields)
+            
+            self.wait_for_visibility(PIMpage.first_delete_btn)
+            self.click(PIMpage.first_delete_btn)
+            
+            self.wait_for_visibility(PIMpage.confirm_delete_btn)
+            self.click(PIMpage.confirm_delete_btn)
+            
+            self.wait_for_visibility(PIMpage.success_toast_msg)
+            is_displayed = self.driver.find_element(*PIMpage.success_toast_msg).is_displayed()
+            
+            self.logger.info(f"PIM - Custom Field Deleted Successfully. Toast Display Status: {is_displayed}")
+            return is_displayed
+            
+        except Exception as e:
+            self.logger.error("PIM - Delete Custom Field Flow Failed")
+            self.logger.exception(e)
+            raise    

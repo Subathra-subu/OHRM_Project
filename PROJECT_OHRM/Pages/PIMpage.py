@@ -37,5 +37,8 @@ class PIMpage:
      custom_field_required_err = (By.XPATH, "//span[contains(@class, 'oxd-input-field-error-message')]")
      save_cus_btn  = (By.XPATH, "//div[@class='oxd-form-actions']/descendant::button[2]")
      select_options_input = (By.XPATH, "//div[@class='oxd-input-group oxd-input-field-bottom-space']//input[@class='oxd-input oxd-input--active oxd-input--error']")
+     
      first_delete_btn = (By.XPATH, "(//div[@class='oxd-table-cell-actions']/button[1])[1]")
      confirm_delete_btn = (By.XPATH, "//div[@class='orangehrm-modal-footer']/child::button[2]")
+     
+     success_toast_msg = (By.XPATH, "//div[contains(@class, 'oxd-toast--success')]")
