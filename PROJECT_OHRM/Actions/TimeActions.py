@@ -1,6 +1,7 @@
-
 import random
 import string
+
+from selenium.webdriver.common.keys import Keys
 
 from Actions.BaseActions import BaseActions
 from Pages.BasePage import BasePage
@@ -78,7 +79,6 @@ class TimeActions(BaseActions):
 
             raise
 
-
     def add_existing_customer(
             self,
             customer_name):
@@ -132,6 +132,79 @@ class TimeActions(BaseActions):
 
             self.save_screenshot(
                 "duplicate_customer_failed"
+            )
+
+            self.logger.exception(e)
+
+            raise
+
+    def verify_attendance_records(
+            self,
+            date):
+
+        try:
+
+            self.click(
+                BasePage.Time
+            )
+
+            self.click(
+                TimePage.ATTENDANCE
+            )
+
+            self.click(
+                TimePage.MY_RECORDS
+            )
+
+            date_box = self.wait_for_visibility(
+                TimePage.DATE
+            )
+
+            date_box.click()
+
+            date_box.send_keys(
+                Keys.CONTROL,
+                "a"
+            )
+
+            date_box.send_keys(
+                Keys.DELETE
+            )
+
+            date_box.send_keys(
+                date
+            )
+
+            self.click(
+                TimePage.VIEW_BUTTON
+            )
+
+            self.scroll_to_element(
+                TimePage.RECORDS_FOUND
+            )
+
+            records = self.get_text(
+                TimePage.RECORDS_FOUND
+            )
+
+            assert "Records Found" in records, (
+                f"Expected Records Found but got {records}"
+            )
+
+            self.logger.info(
+                f"Attendance Records Verified : {records}"
+            )
+
+            return records
+
+        except Exception as e:
+
+            self.logger.error(
+                "Attendance Record Validation Failed"
+            )
+
+            self.save_screenshot(
+                "attendance_records_failed"
             )
 
             self.logger.exception(e)
