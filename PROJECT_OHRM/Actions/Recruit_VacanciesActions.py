@@ -51,14 +51,16 @@ class Recruit_VacanciesActions(BaseActions):
             self.logger.info("Vacancy title entered")
             
             self.click(Recruit_VacanciesPage.job_title)
+            
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+            
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
             
             self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
-
+            
             self.wait_for_visibility(Recruit_VacanciesPage.hiring_manager_option)
 
             self.click(Recruit_VacanciesPage.hiring_manager_option)
-            self.logger.info("Hiring manager selected")
             
             self.js_click(Recruit_VacanciesPage.save)
             self.logger.info("Save button clicked")
@@ -111,7 +113,10 @@ class Recruit_VacanciesActions(BaseActions):
             self.logger.info("Job title selected")
             
             self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
-            self.logger.info("Hiring manager selected")
+            
+            self.wait_for_visibility(Recruit_VacanciesPage.hiring_manager_option)
+
+            self.click(Recruit_VacanciesPage.hiring_manager_option)
             
             self.click(Recruit_VacanciesPage.save)
             self.logger.info("Save button clicked")
@@ -152,6 +157,38 @@ class Recruit_VacanciesActions(BaseActions):
             self.wait_for_visibility(Recruit_VacanciesPage.records)
 
             return self.is_displayed(Recruit_VacanciesPage.records)
+
+        except Exception as e:
+
+            self.logger.error("Valid Search test failed")
+            self.logger.exception(e)
+            raise
+        
+    def searchVacancy_blank(self):
+        
+        actions = ActionChains(self.driver)
+
+        try:
+            
+            self.click(Recruit_VacanciesPage.job_title)
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+
+            self.click(Recruit_VacanciesPage.vacancy)
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+
+            self.click(Recruit_VacanciesPage.hiring_manager)
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+
+            self.click(Recruit_VacanciesPage.status)
+            self.wait_for_visibility(Recruit_VacanciesPage.list_box)
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+
+            self.click(Recruit_VacanciesPage.search)
+
+            return self.is_displayed(Recruit_VacanciesPage.no_records)
 
         except Exception as e:
 
