@@ -37,3 +37,18 @@ class ChangePasswordPage:
         By.XPATH,
         "//div[contains(@class,'oxd-toast--success')]"
     )
+
+    ERROR_TOAST = (
+        By.XPATH,
+        "//div[contains(@class,'oxd-toast--error')]"
+    )
+
+    REQUIRED_MESSAGE = (
+        By.XPATH,
+        "//span[contains(@class,'oxd-input-field-error-message')]"
+    )
+
+    PASSWORD_NOT_MATCH = (
+        By.XPATH,
+        "//span[contains(@class,'oxd-input-field-error-message')]"
+    )
