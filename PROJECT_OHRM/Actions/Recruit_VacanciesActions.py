@@ -1,5 +1,5 @@
 from Actions.BaseActions import BaseActions
-from Pages.Recruit_VacanciesPage import Recruit_VacanciesPage
+from Pages.RecruitmentPage import Recruit_VacanciesPage
 from Actions.LoginActions import LoginActions
 from Utilities.ReadConfig import get_config
 from selenium.webdriver import ActionChains
@@ -69,7 +69,7 @@ class Recruit_VacanciesActions(BaseActions):
         
         except Exception as e:
 
-            self.logger.error("Add vacancy failed")
+            self.logger.error("Login failed")
             self.logger.exception(e)
             
             raise
