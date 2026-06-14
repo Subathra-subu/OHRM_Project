@@ -93,8 +93,6 @@ class DirectoryActions(BaseActions):
 
             self.click(DirectoryPage.search_btn)
 
-            self.wait.until(lambda d: True)
-
             results = self.driver.find_elements(*DirectoryPage.employee_cards)
 
             if len(results) == 0:
@@ -130,8 +128,6 @@ class DirectoryActions(BaseActions):
                     break
 
             self.click(DirectoryPage.search_btn)
-
-            self.wait.until(lambda d: True)
 
             results = self.driver.find_elements(*DirectoryPage.employee_cards)
 

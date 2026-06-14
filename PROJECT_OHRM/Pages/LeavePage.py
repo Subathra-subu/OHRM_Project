@@ -28,10 +28,18 @@ class LeavePage:
 
     employee_required_msg = (By.XPATH,"//input[@placeholder='Type for hints...']/ancestor::div[contains(@class,'oxd-input-group')]//span[text()='Required']")
 
-    employee_required_msg = (By.XPATH,"(//span[text()='Required'])[1]")
-
     leave_type_required_msg = (By.XPATH,"(//span[text()='Required'])[2]")
 
     date_required_msg = (By.XPATH,"(//span[text()='Required'])[3]")
 
     messages = (By.XPATH,"//span[text()='Required']")
+
+    show_leave_status_dropdown = (By.XPATH,"(//div[contains(@class,'oxd-select-text')])[1]")
+
+    leave_list_menu = (By.XPATH,"//a[normalize-space()='Leave List']")
+
+    status_options = (By.XPATH,"//div[@role='listbox']//span")
+    
+    search_button = (By.XPATH,"//button[@type='submit']")
+
+    leave_records = (By.XPATH,"//div[@class='oxd-table-body']/div[@class='oxd-table-card']")
