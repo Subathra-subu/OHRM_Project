@@ -36,7 +36,7 @@ class Recruit_VacanciesPage(BasePage):
     
     success_message = (By.XPATH,"//p[text()='Successfully Saved']")
     
-    required_messages = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::span[text()='Required']")
+    required_messages = (By.XPATH,"//span[text()='Required']")
     
     exist_message = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::span[text()='Already exists']")
     

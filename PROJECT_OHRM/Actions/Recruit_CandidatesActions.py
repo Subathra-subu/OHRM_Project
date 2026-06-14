@@ -65,3 +65,21 @@ class Recruit_CandidatesActions(BaseActions):
             self.logger.error("Add candidate failed")
             self.logger.exception(e)
             raise
+        
+    def addCandidate_blank(self):
+
+        try:
+
+            self.click(Recruit_VacanciesPage.add)
+            self.logger.info("Add button clicked")
+
+            self.js_click(Recruit_VacanciesPage.save)
+            self.logger.info("Save button clicked")
+
+            return self.is_displayed(Recruit_VacanciesPage.required_messages)
+
+        except Exception as e:
+
+            self.logger.error("Blank candidate test failed")
+            self.logger.exception(e)
+            raise

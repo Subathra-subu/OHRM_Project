@@ -19,3 +19,15 @@ class Testaddcandidate:
         assert candidateAction.addCandidate_valid() is True
         
         self.logger.info("Test Ended")
+        
+    def test_addcandidate_blank(self):
+        
+        self.logger.info("Test Started")
+        
+        candidateAction = Recruit_CandidatesActions(self.driver,self.wait)
+        
+        candidateAction.login_entervacancy()
+        
+        assert candidateAction.addCandidate_blank() is True
+        
+        self.logger.info("Test Ended")
