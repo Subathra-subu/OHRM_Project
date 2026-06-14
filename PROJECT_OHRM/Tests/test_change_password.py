@@ -23,7 +23,7 @@ negative_csv = os.path.join(
     "negative_change_password.csv"
 )
 
-
+@pytest.mark.sriram
 @pytest.mark.usefixtures("test_setup_and_down")
 class TestChangePassword:
 
@@ -33,6 +33,8 @@ class TestChangePassword:
         "old_password,new_password,confirm_password,expected_result",
         get_data(negative_csv)
     )
+
+    @pytest.mark.negative_change_password
     def test_negative_change_password(
             self,
             old_password,
@@ -102,6 +104,8 @@ class TestChangePassword:
         "old_password,new_password,confirm_password",
         get_data(positive_csv)
     )
+
+    @pytest.mark.test_change_password
     def test_change_password(
             self,
             old_password,

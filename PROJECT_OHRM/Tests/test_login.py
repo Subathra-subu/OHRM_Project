@@ -17,12 +17,13 @@ invalid_login_path = os.path.join(
     "inValid_Login_datas.xlsx"
 )
 
-
+@pytest.mark.sriram
 @pytest.mark.usefixtures("test_setup_and_down")
 class Test_Login:
 
     logger = log_generator()
 
+    @pytest.mark.login
     def test_login(self):
 
         try:
@@ -82,6 +83,8 @@ class Test_Login:
             "Sheet1"
         )
     )
+
+    @pytest.mark.inValLogin
     def test_invalid_login(
             self,
             username,
@@ -129,6 +132,8 @@ class Test_Login:
             "Sheet2"
         )
     )
+
+    @pytest.mark.withoutCredential
     def test_without_credential(
             self,
             username,
