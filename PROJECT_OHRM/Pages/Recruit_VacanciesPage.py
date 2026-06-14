@@ -18,14 +18,14 @@ class Recruit_VacanciesPage(Recruit_CandidatePage):
     
     exist_message = (By.XPATH,"//div[@class='orangehrm-background-container']/descendant::span[text()='Already exists']")
     
-    list_box = (By.XPATH,"//div[@role='listbox']")
-    
     searching = (By.XPATH,"//div[text()='Searching....']")
     
     records = (By.XPATH,"//div[@class='oxd-table orangehrm-vacancy-list']/child::div[@class='oxd-table-body']/descendant::div[@class='oxd-table-row oxd-table-row--with-border']/child::*")
     
-    option = (By.XPATH,"//div[@role='option']//span[text()='QA Engineer']")
+    list_box = (By.CSS_SELECTOR, "div[role='listbox']")
     
     edit_message = (By.XPATH,"//h6[text()='Edit Vacancy']")
     
-    hiring_manager_option = (By.XPATH,"//div[@role='listbox']//div[@role='option'][1]")
+    hiring_manager_option = (By.XPATH,"//div[contains(@class,'oxd-autocomplete-option') and not(contains(.,'Searching'))]")
+    
+    no_records = (By.XPATH,"//span[text()='No Records Found']")
