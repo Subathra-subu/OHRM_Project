@@ -7,10 +7,11 @@ from Actions.LoginActions import LoginActions
 from Actions.TimeActions import TimeActions
 from Utilities.ReadConfig import get_config
 
-
+@pytest.mark.sriram
 @pytest.mark.usefixtures("test_setup_and_down")
 class TestTime:
 
+    @pytest.mark.test_add_coutomer
     @pytest.mark.order(1)
     @pytest.mark.parametrize(
         "customer_name,description",
@@ -21,6 +22,7 @@ class TestTime:
             )
         ]
     )
+    
     def test_add_customer(
             self,
             customer_name,
@@ -74,6 +76,7 @@ class TestTime:
             f"Customer Created Successfully : {customer}"
         )
 
+    
     @pytest.mark.order(2)
     @pytest.mark.parametrize(
         "customer_prefix,description_prefix",
