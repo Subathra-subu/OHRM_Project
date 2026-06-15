@@ -11,7 +11,7 @@ from Utilities.ReadConfig import get_config
 class Test_TrackerAdd:
 
     logger = log_generator()
-
+    @pytest.mark.depends(name="valid_search")
     def test_add_tracker(self):
 
         try:

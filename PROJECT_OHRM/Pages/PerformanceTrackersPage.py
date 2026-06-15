@@ -13,7 +13,7 @@ class PerformanceTrackersPage:
     tracker_required = (By.XPATH,"//label[text()='Tracker Name']/following::span[text()='Required'][1]")
     search_employee = (By.XPATH,"//label[text()='Employee Name']/following::input[1]")
     search_btn = (By.XPATH,"//button[@type='reset']/following-sibling::button")
-    search_result = (By.XPATH,"//div[@class='oxd-table-cell oxd-padding-cell'][2]")
+    search_result = (By.XPATH,"((//div[@role='row'])[2]//div[@class='oxd-table-cell oxd-padding-cell']//following-sibling::div)[2]")
     no_record = (By.XPATH,"//span[text()='No Records Found']")
     employee_suggestion = (By.XPATH,"//div[@role='option']//span")
     reviewer_suggestion = (By.XPATH,"//div[@role='option']//span")

@@ -1,3 +1,4 @@
+import os
 import pytest
 
 from Actions.LoginActions import LoginActions
@@ -5,17 +6,15 @@ from Actions.PerformanceTrackerActions import PerformanceTrackersActions
 from Utilities.ReadConfig import get_config
 from Utilities.CSVUtils import get_data
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(current_dir, "..", "test_data", "TrackerSearch.csv")
 
 @pytest.mark.usefixtures("test_setup_and_down")
 class Test_TrackerSearch:
+    @pytest.mark.smoke(depends="valid_search")
+    @pytest.mark.parametrize("employee",get_data(csv_path))
 
-    @pytest.mark.parametrize(
-        "employee",
-        get_data("test_data/TrackerSearch.csv")
-    )
-    def test_valid_search_tracker(
-            self,
-            employee):
+    def test_valid_search_tracker(self, employee):
 
         username = get_config(
             "username and password",
@@ -42,10 +41,12 @@ class Test_TrackerSearch:
             self.wait
         )
 
+        employee_name = employee[0]
+
         result = tracker.search_tracker(
-            employee
+            employee_name
         )
 
         print(f"Search Result : {result}")
 
-        assert employee == result
+        assert employee_name == result
