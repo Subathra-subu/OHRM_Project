@@ -5,6 +5,7 @@ from Utilities.ReadConfig import get_config
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from Utilities.CSVUtils import get_data
+import os
 
 
 class Recruit_CandidatesActions(BaseActions):
@@ -37,7 +38,10 @@ class Recruit_CandidatesActions(BaseActions):
 
         try:
 
-            candidate_data = get_data("test_data/candidate_data.csv")
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            file_path = os.path.join(current_dir, "..", "test_data", "candidate_data.csv")
+
+            candidate_data = get_data(file_path)
 
             self.js_click(Recruit_VacanciesPage.add)
             self.logger.info("Add button clicked")
