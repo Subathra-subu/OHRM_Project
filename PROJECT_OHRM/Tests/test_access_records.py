@@ -4,6 +4,7 @@ from Actions.MaintenanceActions import MaintenanceActions
 from Utilities.ExcelUtils import get_data
 
 @pytest.mark.usefixtures("test_setup_and_down")
+@pytest.mark.krishna
 class Test_access_records:
 
     @pytest.fixture(autouse=True)
