@@ -3,6 +3,8 @@ from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 from datetime import datetime
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 class BaseActions:
 
@@ -140,6 +142,7 @@ class BaseActions:
         except Exception as e:
             self.logger.error("Failed to click the element")
             self.logger.exception(e)
+    
     def scroll_into_view(self,locator):
    
         try:
@@ -252,4 +255,74 @@ class BaseActions:
         except Exception as e:
             self.logger.error("Failed to capture screenshot")
             self.logger.exception(e)
+            raise
+
+
+
+    def scroll_to_element(self, locator):
+
+        try:
+
+            element = self.wait.until(
+                EC.presence_of_element_located(locator)
+            )
+
+            ActionChains(self.driver)\
+                .scroll_to_element(element)\
+                .perform()
+
+            self.logger.info(
+                "Scrolled to element successfully"
+            )
+
+            return element
+
+        except Exception as e:
+
+            self.logger.error(
+                "Failed to scroll to element"
+            )
+
+            self.logger.exception(e)
+
+            raise
+
+    def clear_and_enter_text(
+        self,
+        locator,
+        value):
+
+        try:
+
+            element = self.wait.until(
+                EC.visibility_of_element_located(locator)
+            )
+
+            element.click()
+
+            element.send_keys(
+                Keys.CONTROL,
+                "a"
+            )
+
+            element.send_keys(
+                Keys.BACKSPACE
+            )
+
+            element.send_keys(
+                str(value)
+            )
+
+            self.logger.info(
+                f"Entered : {value}"
+            )
+
+        except Exception as e:
+
+            self.logger.error(
+                "Failed to Enter Text"
+            )
+
+            self.logger.exception(e)
+
             raise

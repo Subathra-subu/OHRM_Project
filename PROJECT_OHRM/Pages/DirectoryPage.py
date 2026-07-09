@@ -30,6 +30,4 @@ class DirectoryPage:
 
     location_dropdown = (By.XPATH, "//label[text()='Location']/parent::div/following-sibling::div//div[contains(@class,'oxd-select-text')]")
 
-    employee_location_results = (By.XPATH, "//p[contains(@class,'orangehrm-directory-card-footer')]")
-
     location_options = (By.XPATH, "//div[@role='listbox']//span")
