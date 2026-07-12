@@ -54,3 +54,14 @@ class PerformanceTrackersActions(BaseActions):
      self.js_click(PerformanceTrackersPage.search_btn)
 
      return self.get_text(PerformanceTrackersPage.search_result)
+    def invalid_search_tracker(self, employee):
+
+     self.click(BasePage.performance)
+     self.js_click(PerformanceTrackersPage.configure)
+     self.click(PerformanceTrackersPage.track_select)
+
+     self.enter_text(PerformanceTrackersPage.search_employee, employee)
+
+     self.js_click(PerformanceTrackersPage.search_btn)
+
+     return self.get_text(PerformanceTrackersPage.no_record)
