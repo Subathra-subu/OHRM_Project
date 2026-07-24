@@ -9,30 +9,33 @@ class buzzActions(BaseActions):
 
     def __init__(self, driver, wait):
         super().__init__(driver, wait)
+
     def share_buzz_image(self, relative_image_path):
         try:
             self.logger.info("Buzz - Sharing image flow started")
+
             LoginActions.login(
-                self, 
+                self,
                 get_config("username and password", "username"),
                 get_config("username and password", "password")
             )
+
             absolute_image_path = os.path.abspath(relative_image_path)
-            
-            self.click(BasePage.Buzz)
-            self.click(buzzPage.post_image)
-            file_element = self.driver.find_element(*buzzPage.buzz_file_input)
+
+            self.clickstale(BasePage.Buzz)
+            self.clickstale(buzzPage.post_image)
+
+            file_element = self.wait_for_visibility(buzzPage.buzz_file_input)
             file_element.send_keys(absolute_image_path)
-            
-            self.wait_for_visibility(buzzPage.share_btn)
-            self.click(buzzPage.share_btn)
-            
+
+            self.clickstale(buzzPage.share_btn)
+
             self.wait_for_visibility(buzzPage.posted_image)
-            is_posted = self.driver.find_element(*buzzPage.posted_image).is_displayed()
-            
+            is_posted = self.is_displayed(buzzPage.posted_image)
+
             self.logger.info(f"Buzz - Image successfully uploaded. Display Status on Feed: {is_posted}")
             return is_posted
-            
+
         except Exception as e:
             self.logger.error("Buzz - Sharing image flow failed")
             self.logger.exception(e)
@@ -48,18 +51,20 @@ class buzzActions(BaseActions):
                 get_config("username and password", "password")
             )
 
-            self.click(BasePage.Buzz)
+            self.clickstale(BasePage.Buzz)
 
             self.wait_for_visibility(buzzPage.textarea)
             self.enter_text(buzzPage.textarea, message)
 
-            self.click(buzzPage.postbutton)
+            self.clickstale(buzzPage.postbutton)
 
             locator = buzzPage.posted_text_locator(message)
 
             self.wait_for_visibility(locator)
 
             posted_text = self.get_text(locator)
+
+            self.logger.info(f"Buzz - Text posted successfully: {posted_text}")
 
             return posted_text
 

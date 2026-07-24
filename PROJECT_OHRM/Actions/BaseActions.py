@@ -253,3 +253,23 @@ class BaseActions:
             self.logger.error("Failed to capture screenshot")
             self.logger.exception(e)
             raise
+
+    def clickstale(self, locator, timeout=10):
+     for attempt in range(3):
+        try:
+            element = WebDriverWait(self.driver, timeout).until(
+                EC.element_to_be_clickable(locator)
+            )
+
+            element.click()
+            self.logger.info(f"Clicked element: {locator}")
+            return
+
+        except StaleElementReferenceException:
+            self.logger.warning(
+                f"Stale element encountered while clicking {locator}. Retry {attempt + 1}"
+            )
+
+     raise StaleElementReferenceException(
+        f"Unable to click {locator} after 3 retries."
+    )
