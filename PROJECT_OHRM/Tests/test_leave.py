@@ -58,4 +58,4 @@ class TestLeave:
         employee_name = data[0][0]
         result = leave.search_leave_list(employee_name)
         assert "James Butler" in result
-        assert "Taken" in result
+        assert "Scheduled" in result

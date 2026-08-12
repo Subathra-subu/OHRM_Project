@@ -102,7 +102,7 @@ class LeaveActions(BaseActions):
         options = self.driver.find_elements(*lp.status_options)
         for option in options:
 
-            if option.text.strip() == "Taken":
+            if option.text.strip() == "Scheduled":
                 option.click()
                 break
         self.click(lp.search_button)
