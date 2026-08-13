@@ -109,3 +109,17 @@ class LeaveActions(BaseActions):
         self.wait_for_visibility(lp.leave_records)
         records = self.driver.find_elements(*lp.leave_records)
         return records[0].text
+
+    def invalidEmployee_search(self,employee):
+        self.logger.info("Invalid employee name Leave List Search Started")
+        self.wait_for_visibility(BasePage.Leave)
+        self.js_click(BasePage.Leave)
+        self.wait_for_visibility(lp.leave_list_menu)
+        self.click(lp.leave_list_menu)
+        self.wait_for_visibility(lp.employee_name)
+        self.enter_text(lp.employee_name,employee)
+        self.click(lp.search_button)
+
+        
+
+

@@ -43,3 +43,5 @@ class LeavePage:
     search_button = (By.XPATH,"//button[@type='submit']")
 
     leave_records = (By.XPATH,"//div[@class='oxd-table-body']/div[@class='oxd-table-card']")
+
+    invalid_name = (By.XPATH,"//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")
