@@ -43,13 +43,14 @@ class PerformanceTrackersActions(BaseActions):
 
     def search_tracker(self, employee):
 
-        actions = ActionChains(self.driver)
+     self.click(BasePage.performance)
+     self.js_click(PerformanceTrackersPage.configure)
+     self.click(PerformanceTrackersPage.track_select)
 
-        self.click(BasePage.performance)
-        self.js_click(PerformanceTrackersPage.configure)
-        self.click(PerformanceTrackersPage.track_select)
-        self.enter_text(PerformanceTrackersPage.search_employee, employee)
-        actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
-        self.click(PerformanceTrackersPage.search_btn)
+     self.enter_text(PerformanceTrackersPage.search_employee, employee)
 
-        return self.get_text(PerformanceTrackersPage.search_result)
+     self.click(PerformanceTrackersPage.employee_suggestion)
+
+     self.js_click(PerformanceTrackersPage.search_btn)
+
+     return self.get_text(PerformanceTrackersPage.search_result)

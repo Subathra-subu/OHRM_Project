@@ -4,6 +4,7 @@ from Actions.buzzActions import buzzActions
 from Utilities.Logger import log_generator
 
 @pytest.mark.usefixtures("test_setup_and_down")
+@pytest.mark.krishna
 class Test_buzz:
 
     logger = log_generator()
@@ -26,5 +27,26 @@ class Test_buzz:
 
         except Exception as e:
             self.logger.error("******** Buzz Image Share Test Failed ********")
+            self.logger.exception(e)
+            raise
+
+    def test_successfully_post_buzz_text(self):
+        try:
+            self.logger.info("******** Buzz Text Post Test Started ********")
+
+            self.buzz = buzzActions(self.driver, self.wait)
+
+            message = "Automation Test Buzz Post"
+
+            actual_text = self.buzz.share_buzz_text(message)
+
+            assert actual_text == message, (
+                f"Expected '{message}' but found '{actual_text}'"
+            )
+
+            self.logger.info("******** Buzz Text Post Test Passed ********")
+
+        except Exception as e:
+            self.logger.error("******** Buzz Text Post Test Failed ********")
             self.logger.exception(e)
             raise

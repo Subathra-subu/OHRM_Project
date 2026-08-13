@@ -65,3 +65,5 @@ class Recruit_VacanciesPage(BasePage):
     keywords = (By.XPATH, "//label[text()='Keywords']/following::input[1]")
     
     candidate_profile_message = (By.XPATH,"//h6[text()='Candidate Profile']")
+    
+    vacancy_name=(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[2]")

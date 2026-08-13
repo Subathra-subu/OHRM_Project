@@ -8,6 +8,7 @@ import os
 import random
 
 @pytest.mark.usefixtures("test_setup_and_down")
+@pytest.mark.krishna
 class Test_add_employee_pim:
 
     logger = log_generator()

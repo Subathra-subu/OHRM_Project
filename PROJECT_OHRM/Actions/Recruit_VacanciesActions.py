@@ -5,12 +5,17 @@ from Utilities.ReadConfig import get_config
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from Utilities.ExcelUtils import get_data
-import time
+import os
 
 class Recruit_VacanciesActions(BaseActions):
     
     def __init__(self, driver, wait):
         super().__init__(driver, wait)
+        
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, "..", "test_data", "vacancy_data.xlsx")
+
+    vacancy_data = get_data(file_path,"AddVacancy")
     
         
     def login_entervacancy(self):
@@ -46,8 +51,8 @@ class Recruit_VacanciesActions(BaseActions):
             self.js_click(Recruit_VacanciesPage.add)
             self.logger.info("Add button clikced")
             
-            vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy") 
-            self.enter_text(Recruit_VacanciesPage.vacancy_name,vacancy_data[0][0])
+            # vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy") 
+            self.enter_text(Recruit_VacanciesPage.vacancy_name,self.vacancy_data[0][0])
             self.logger.info("Vacancy title entered")
             
             self.click(Recruit_VacanciesPage.job_title)
@@ -56,7 +61,7 @@ class Recruit_VacanciesActions(BaseActions):
             
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
             
-            self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
+            self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,self.vacancy_data[0][1])
             
             self.wait_for_visibility(Recruit_VacanciesPage.hiring_manager_option)
 
@@ -104,15 +109,15 @@ class Recruit_VacanciesActions(BaseActions):
             self.js_click(Recruit_VacanciesPage.add)
             self.logger.info("Add button clikced")
             
-            vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy")
-            self.enter_text(Recruit_VacanciesPage.vacancy_name,vacancy_data[0][0])
+            # vacancy_data = get_data("test_data/vacancy_data.xlsx","AddVacancy")
+            self.enter_text(Recruit_VacanciesPage.vacancy_name,self.vacancy_data[0][0])
             self.logger.info("Vacancy title entered")
             
             self.click(Recruit_VacanciesPage.job_title)
             actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
             self.logger.info("Job title selected")
             
-            self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,vacancy_data[0][1])
+            self.enter_text(Recruit_VacanciesPage.Hiring_Manager_input,self.vacancy_data[0][1])
             
             self.wait_for_visibility(Recruit_VacanciesPage.hiring_manager_option)
 

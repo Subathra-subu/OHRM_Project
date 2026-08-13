@@ -47,6 +47,7 @@ class MaintenanceActions(BaseActions):
         except Exception as e:
             self.logger.error("Maintenance - Access Records Execution Failed")
             self.logger.exception(e)
+            self.save_screenshot("Maintenance_Access_Records_Failure")
             raise
 
     def verify_blank_search_error_state(self):
@@ -76,5 +77,7 @@ class MaintenanceActions(BaseActions):
             
         except Exception as e:
             self.logger.error("Maintenance - Validation UI State check failed")
+            self.save_screenshot("Maintenance_Blank_Search_Failure")
             self.logger.exception(e)
             raise
+        
