@@ -8,7 +8,7 @@ from Utilities.ReadConfig import get_config
 
 
 @pytest.mark.usefixtures("test_setup_and_down")
-class Test_TrackerAdd:
+class Test_TrackerDelete:
 
     logger = log_generator()
 
@@ -30,10 +30,10 @@ class Test_TrackerAdd:
             )
         )
 
-    def test_add_tracker(self):
+    def test_delete_tracker(self):
 
         self.logger.info(
-            "Tracker Add Started"
+            "Delete Tracker Started"
         )
 
         self.login()
@@ -44,46 +44,14 @@ class Test_TrackerAdd:
         )
 
         tracker_name = data[0][0]
-        employee = data[0][1]
-        reviewer = data[0][2]
 
         tracker_action = PerformanceTrackersActions(
             self.driver,
             self.wait
         )
 
-        result = tracker_action.add_tracker(
-            tracker_name,
-            employee,
-            reviewer
+        result = tracker_action.delete_tracker(
+            tracker_name
         )
 
-        
-
-    def test_invalid_add_tracker(self):
-
-        self.logger.info(
-            "Invalid Tracker Add Started"
-        )
-
-        self.login()
-
-        data = get_data(
-            "test_data/TrackerData.xlsx",
-            "Tracker"
-        )
-
-        employee = data[0][1]
-        reviewer = data[0][2]
-
-        tracker_action = PerformanceTrackersActions(
-            self.driver,
-            self.wait
-        )
-
-        result = tracker_action.invalid_add_tracker(
-            employee,
-            reviewer
-        )
-
-        assert result == "Required"
+        assert result == "Successfully Deleted"
