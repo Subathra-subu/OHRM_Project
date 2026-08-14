@@ -37,6 +37,21 @@ class buzzPage:
         "//div[@class='orangehrm-buzz-create-post-header-text']/descendant::button[1]"
     )
 
+    threedot = (
+        By.XPATH,
+        "//div[@class='oxd-grid-1 orangehrm-buzz-newsfeed-posts']/div[1]/descendant::button[1]"
+    )
+    editpostBUT = (
+        By.XPATH,"//ul[@class='oxd-dropdown-menu']/descendant::p[2]"
+    )
+    textarea_edit = (
+        By.XPATH,
+        "//div[@class='orangehrm-buzz-post-modal-header-text']/descendant::textarea"
+    )
+    edit_post_btn = (
+        By.XPATH,   
+        "//div[@class='oxd-form-actions orangehrm-buzz-post-modal-actions']/descendant::button[1]"
+    )
     @staticmethod
     def posted_text_locator(message):
         return (

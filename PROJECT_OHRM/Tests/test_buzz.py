@@ -30,6 +30,7 @@ class Test_buzz:
             self.logger.exception(e)
             raise
 
+    
     def test_successfully_post_buzz_text(self):
         try:
             self.logger.info("******** Buzz Text Post Test Started ********")
@@ -50,3 +51,30 @@ class Test_buzz:
             self.logger.error("******** Buzz Text Post Test Failed ********")
             self.logger.exception(e)
             raise
+
+    
+    def test_successfully_edit_buzz_text(self):
+        try:
+            self.logger.info("******** Buzz Text Edit Test Started ********")
+
+            self.buzz = buzzActions(self.driver, self.wait)
+
+            original_message = "Automation Test Buzz Post"
+            edited_message = "Edited Automation Test Buzz Post"
+
+            # First, post the original message
+            self.buzz.share_buzz_text(original_message)
+
+            # Now, edit the posted message
+            actual_edited_text = self.buzz.edit_buzz_text(original_message, edited_message)
+
+            assert actual_edited_text == edited_message, (
+                f"Expected '{edited_message}' but found '{actual_edited_text}'"
+            )
+
+            self.logger.info("******** Buzz Text Edit Test Passed ********")
+
+        except Exception as e:
+            self.logger.error("******** Buzz Text Edit Test Failed ********")
+            self.logger.exception(e)
+            raise    

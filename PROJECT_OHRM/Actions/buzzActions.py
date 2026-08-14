@@ -163,3 +163,38 @@ class buzzActions(BaseActions):
             self.logger.error("Buzz - Sharing text post failed")
             self.logger.exception(e)
             raise
+
+    def edit_buzz_text(self, original_message, edited_message):
+        try:
+            self.logger.info("Buzz - Editing text post started")
+
+            original_locator = buzzPage.posted_text_locator(original_message)
+
+            self.wait_for_visibility(original_locator)
+
+            self.clickstale(buzzPage.threedot)
+
+            self.clickstale(buzzPage.editpostBUT)
+
+            self.wait_for_visibility(buzzPage.textarea_edit)
+           
+            self.clear_and_enter_text(buzzPage.textarea_edit, edited_message)
+
+            self.clickstale(buzzPage.edit_post_btn)
+
+            edited_locator = buzzPage.posted_text_locator(edited_message)
+
+            self.wait_for_visibility(edited_locator)
+
+            posted_edited_text = self.get_text(edited_locator)
+
+            self.logger.info(
+                f"Buzz - Text edited successfully: {posted_edited_text}"
+            )
+
+            return posted_edited_text
+
+        except Exception as e:
+            self.logger.error("Buzz - Editing text post failed")
+            self.logger.exception(e)
+            raise    
