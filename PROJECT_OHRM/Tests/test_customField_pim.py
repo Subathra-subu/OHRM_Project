@@ -7,6 +7,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 csv_file_path = os.path.join(current_dir, "..", "test_data", "custom_field_data.csv")
 
 @pytest.mark.usefixtures("test_setup_and_down")
+@pytest.mark.krishna
 class Test_customField_pim:
 
     @pytest.mark.order(1)

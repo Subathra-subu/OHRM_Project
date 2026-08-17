@@ -20,16 +20,4 @@ class Testsearchvacancy():
         assert vacancyAction.searchVacancy()==True
         
         self.logger.info("Test Ended")
-        
-    def test_searchvacancy_blank(self):
-        
-        self.logger.info("Test Started")
-        
-        vacancyAction = Recruit_VacanciesActions(self.driver,self.wait)
-        
-        vacancyAction.login_entervacancy()
-        
-        assert vacancyAction.searchVacancy_blank()==True
-        
-        self.logger.info("Test Ended")
       

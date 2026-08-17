@@ -67,7 +67,6 @@ class LeaveActions(BaseActions):
         from_date_ele.send_keys(Keys.CONTROL + "a")
         from_date_ele.send_keys(Keys.DELETE)
         from_date_ele.send_keys(from_date)
-
         to_date_ele = self.driver.find_element(*lp.to_date)
         to_date_ele.send_keys(Keys.CONTROL + "a")
         to_date_ele.send_keys(Keys.DELETE)
@@ -79,12 +78,34 @@ class LeaveActions(BaseActions):
 
     def assign_leave_all_fields_required(self):
 
-        self.logger.info("Assign Leave All Fields Required Validation Started") 
+        self.logger.info("Assign Leave All Fields Required Validation Started")
         self.wait_for_visibility(BasePage.Leave)
         self.js_click(BasePage.Leave)
         self.wait_for_visibility(lp.assign_leave_menu)
         self.click(lp.assign_leave_menu)
         self.click(lp.assign_btn)
-        return len(lp.messages)
+        self.wait_for_visibility(lp.employee_required_msg)
+        messages = self.driver.find_elements(*lp.messages)
+        return len(messages)
+    
+    def search_leave_list(self,employee):
 
-        
+        self.logger.info("Leave List Search Started")
+        self.wait_for_visibility(BasePage.Leave)
+        self.js_click(BasePage.Leave)
+        self.wait_for_visibility(lp.leave_list_menu)
+        self.click(lp.leave_list_menu)
+        self.wait_for_visibility(lp.employee_name)
+        self.enter_text(lp.employee_name,employee)
+        self.select_first_dropdown_option_via_js(lp.auto_dropdown)
+        self.click(lp.show_leave_status_dropdown)
+        options = self.driver.find_elements(*lp.status_options)
+        for option in options:
+
+            if option.text.strip() == "Taken":
+                option.click()
+                break
+        self.click(lp.search_button)
+        self.wait_for_visibility(lp.leave_records)
+        records = self.driver.find_elements(*lp.leave_records)
+        return records[0].text

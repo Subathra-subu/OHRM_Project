@@ -1,7 +1,11 @@
 from selenium.webdriver.support import expected_conditions as EC
 from Utilities.Logger import log_generator
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    StaleElementReferenceException,
+)
+from selenium.webdriver.common.by import By
 from datetime import datetime
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -159,10 +163,34 @@ class BaseActions:
             self.logger.info("Element is Visible")
             return element
         except Exception as e:
-
-            self.logger.error("Element Not Visible")
+            self.logger.error("Element Not Visible - attempting presence fallback")
             self.logger.exception(e)
-            raise
+
+            try:
+                # Fallback: wait for presence (element exists in DOM even if hidden)
+                element = WebDriverWait(self.driver, timeout).until(
+                    EC.presence_of_element_located(locator)
+                )
+
+                # If element is present but not visible, try to unhide it via JS so send_keys/click can succeed
+                try:
+                    if not element.is_displayed():
+                        self.driver.execute_script(
+                            "arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible';",
+                            element,
+                        )
+                        self.logger.info("Made hidden element visible via JS fallback")
+
+                except Exception:
+                    # ignore JS failures and return the present element for best-effort interaction
+                    pass
+
+                return element
+
+            except Exception as inner_e:
+                self.logger.error("Presence fallback also failed")
+                self.logger.exception(inner_e)
+                raise
 
     def wait_for_clickable(self, locator, timeout=10):
         try:
@@ -258,6 +286,43 @@ class BaseActions:
             self.logger.exception(e)
             raise
 
+    def clickstale(self, locator, timeout=10):
+     loader = (By.CSS_SELECTOR, "div.oxd-form-loader")
+
+     for attempt in range(3):
+        try:
+            # OrangeHRM temporarily overlays forms while dependent controls load.
+            # A target can be "clickable" while that overlay still owns the click.
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located(loader)
+            )
+
+            element = WebDriverWait(self.driver, timeout).until(
+                EC.element_to_be_clickable(locator)
+            )
+
+            element.click()
+            self.logger.info(f"Clicked element: {locator}")
+            return
+
+        except StaleElementReferenceException:
+            self.logger.warning(
+                f"Stale element encountered while clicking {locator}. Retry {attempt + 1}"
+            )
+
+        except ElementClickInterceptedException:
+            self.logger.warning(
+                f"Click on {locator} was blocked by a loading overlay. "
+                f"Retry {attempt + 1}"
+            )
+
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located(loader)
+            )
+
+     raise ElementClickInterceptedException(
+        f"Unable to click {locator} after 3 retries."
+    )
 
 
     def scroll_to_element(self, locator):

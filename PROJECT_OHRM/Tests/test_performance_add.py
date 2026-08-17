@@ -1,4 +1,5 @@
 import pytest
+
 from Actions.PerformanceActions import PerformanceActions
 from Actions.LoginActions import LoginActions
 from Utilities.ReadConfig import get_config
@@ -10,96 +11,124 @@ class Test_PerformanceAdd:
 
     logger = log_generator()
 
+    def login(self):
+
+        login = LoginActions(
+            self.driver,
+            self.wait
+        )
+
+        login.login(
+            get_config(
+                "username and password",
+                "username"
+            ),
+            get_config(
+                "username and password",
+                "password"
+            )
+        )
+
     def test_kip_add(self):
 
-        try:
+        self.logger.info(
+            "KPI Add Started"
+        )
 
-            self.logger.info("Scenario started")
+        self.login()
 
-            login = LoginActions(self.driver, self.wait)
+        kpi = get_config(
+            "performance",
+            "kpi"
+        )
 
-            login.login(
-                get_config("username and password", "username"),
-                get_config("username and password", "password")
-            )
+        performance = PerformanceActions(
+            self.driver,
+            self.wait
+        )
 
-            kpi = get_config("performance", "kpi")
+        msg = performance.add_kpi(kpi)
 
-            performance = PerformanceActions(self.driver, self.wait)
+        assert msg == "Successfully Saved"
 
-            msg = performance.add_kpi(kpi)
+        self.logger.info(
+            "KPI Added Successfully"
+        )
 
-            assert msg == "Successfully Saved"
-
-            self.logger.info("KPI Added Successfully")
-
-        except Exception as e:
-
-            self.logger.error(f"Test Failed: {e}")
-            raise
-    
     def test_invalid_add(self):
-        try:
-            self.logger.info("Scenario started")
-            login = LoginActions(self.driver, self.wait)
 
-            login.login(
-                get_config("username and password", "username"),
-                get_config("username and password", "password")
-            )
+        self.logger.info(
+            "Invalid KPI Add Started"
+        )
 
-            kpiinvalid = get_config("performance", "kpiinvalid")
-            performance = PerformanceActions(self.driver, self.wait)
-            res=performance.invalid_add(kpiinvalid)
-            assert res == "Required"
-            self.logger.info("KPI Not Added Successfully")
-        except Exception as e:
+        self.login()
 
-            self.logger.error(f"Test Failed: {e}")
-            raise
+        kpiinvalid = get_config(
+            "performance",
+            "kpiinvalid"
+        )
+
+        performance = PerformanceActions(
+            self.driver,
+            self.wait
+        )
+
+        result = performance.invalid_add(
+            kpiinvalid
+        )
+
+        assert result == "Required"
+
     def test_invalidwithouttitle(self):
-        try:
-            self.logger.info("Scenario started")
-            login = LoginActions(self.driver, self.wait)
 
-            login.login(
-                get_config("username and password", "username"),
-                get_config("username and password", "password")
-            )
+        self.logger.info(
+            "KPI Without Job Title Started"
+        )
 
-            kpiinvalid = get_config("performance", "kpi")
-            performance = PerformanceActions(self.driver, self.wait)
-            res=performance.invalid_addwithtitle(kpiinvalid)
-            assert res == "Required"
-            self.logger.info("KPI Not Added Successfully")
-        except Exception as e:
+        self.login()
 
-            self.logger.error(f"Test Failed: {e}")
-            raise
+        kpi = get_config(
+            "performance",
+            "kpi"
+        )
+
+        performance = PerformanceActions(
+            self.driver,
+            self.wait
+        )
+
+        result = performance.invalid_addwithtitle(
+            kpi
+        )
+
+        assert result == "Required"
+
     def test_invalidmax_rate(self):
-        try:
-            self.logger.info("Scenario started")
-            login = LoginActions(self.driver, self.wait)
 
-            login.login(
-                get_config("username and password", "username"),
-                get_config("username and password", "password")
-            )
+        self.logger.info(
+            "Invalid Max Rate Started"
+        )
 
-            kpiinvalid = get_config("performance", "kpi")
-            max_rate = get_config("performance","maxrate")
+        self.login()
 
-            performance = PerformanceActions(self.driver, self.wait)
-            res=performance.invalid_max_rate(kpiinvalid,max_rate)
-            assert res == "Should be a number between 0-100"
-            self.logger.info("KPI Not Added Successfully")
-        except Exception as e:
+        kpi = get_config(
+            "performance",
+            "kpi"
+        )
 
-            self.logger.error(f"Test Failed: {e}")
-            raise
+        max_rate = get_config(
+            "performance",
+            "maxrate"
+        )
 
-          
+        performance = PerformanceActions(
+            self.driver,
+            self.wait
+        )
 
+        result = performance.invalid_max_rate(
+            kpi,
+            max_rate
+        )
 
-
-
+        assert result == "Should be a number between 0-100"

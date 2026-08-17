@@ -4,6 +4,7 @@ from Actions.LoginActions import LoginActions
 from Actions.LeaveActions import LeaveActions
 from Utilities.ReadConfig import get_config
 from Utilities.CSVUtils import get_data
+from Utilities.ExcelUtils import get_data as get_excel_data
 
 @pytest.mark.usefixtures("test_setup_and_down")
 class TestLeave:
@@ -44,6 +45,17 @@ class TestLeave:
         leave = LeaveActions(self.driver,self.wait)
         count = leave.assign_leave_all_fields_required()
         print(f"Required Validation Count : {count}")
-        assert count >= 2
-        
-    
+        assert count == 4
+
+    def test_leave_list_search(self):
+
+        username = get_config("username and password", "username")
+        password = get_config("username and password","password")
+        login = LoginActions(self.driver,self.wait)
+        login.login(username,password)
+        leave = LeaveActions(self.driver,self.wait)
+        data = get_excel_data("test_data/DirectoryData.xlsx","EmployeeSearch")
+        employee_name = data[0][0]
+        result = leave.search_leave_list(employee_name)
+        assert "James Butler" in result
+        assert "Taken" in result

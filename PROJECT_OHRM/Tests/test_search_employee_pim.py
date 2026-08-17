@@ -7,6 +7,7 @@ from Utilities.Logger import log_generator
 import os
 
 @pytest.mark.usefixtures("test_setup_and_down")
+@pytest.mark.krishna
 class Test_Search_Employee_pim:
 
     logger = log_generator()
