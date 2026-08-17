@@ -110,7 +110,6 @@ class pimActions(BaseActions):
                 self.enter_text(PIMpage.lname, text_value)
 
             self.wait_for_invisibility(PIMpage.form_loader)
-
             self.clickstale(PIMpage.save_btn)
 
             err = self.get_text(PIMpage.lname_err_msg)

@@ -171,7 +171,6 @@ class buzzActions(BaseActions):
             original_locator = buzzPage.posted_text_locator(original_message)
 
             self.wait_for_visibility(original_locator)
-
             self.clickstale(buzzPage.threedot)
 
             self.clickstale(buzzPage.editpostBUT)
