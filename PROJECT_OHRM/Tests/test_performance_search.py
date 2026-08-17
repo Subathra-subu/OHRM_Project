@@ -1,4 +1,5 @@
 import pytest
+
 from Actions.PerformanceActions import PerformanceActions
 from Actions.LoginActions import LoginActions
 from Utilities.ReadConfig import get_config
@@ -10,51 +11,62 @@ class Test_PerformanceSearch:
 
     logger = log_generator()
 
+    def login(self):
+
+        login = LoginActions(
+            self.driver,
+            self.wait
+        )
+
+        login.login(
+            get_config(
+                "username and password",
+                "username"
+            ),
+            get_config(
+                "username and password",
+                "password"
+            )
+        )
+
     def test_valid_search(self):
 
-        try:
+        self.logger.info(
+            "Valid KPI Search Started"
+        )
 
-            self.logger.info("Scenario started")
+        self.login()
 
-            login = LoginActions(self.driver, self.wait)
+        performance = PerformanceActions(
+            self.driver,
+            self.wait
+        )
 
-            login.login(
-                get_config("username and password", "username"),
-                get_config("username and password", "password")
-            )
-            performance = PerformanceActions(self.driver, self.wait)
-           
-            ans=performance.valid_search()
-            assert ans == "Account Assistant"
-        
-            self.logger.info("KPI Search Success!")
+        result = performance.valid_search()
 
-        except Exception as e:
+        assert result == "Account Assistant"
 
-            self.logger.error(f"Test Failed: {e}")
-            raise
+        self.logger.info(
+            "KPI Search Success"
+        )
 
     def test_invalid_search(self):
 
-         try:
+        self.logger.info(
+            "Invalid KPI Search Started"
+        )
 
-            self.logger.info("Scenario started")
+        self.login()
 
-            login = LoginActions(self.driver, self.wait)
+        performance = PerformanceActions(
+            self.driver,
+            self.wait
+        )
 
-            login.login(
-                get_config("username and password", "username"),
-                get_config("username and password", "password")
-            )
-            performance = PerformanceActions(self.driver, self.wait)
-            ans=performance.invalid_search()
-            assert ans == "No Records Found"
+        result = performance.invalid_search()
 
-            self.logger.info("KPI Search Not Success!")
+        assert result == "No Records Found"
 
-         except Exception as e:
-
-            self.logger.error(f"Test Failed: {e}")
-            raise
-            
-   
+        self.logger.info(
+            "Invalid KPI Search Verified"
+        )
