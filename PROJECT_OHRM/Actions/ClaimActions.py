@@ -5,6 +5,7 @@ from Utilities.ExcelUtils import get_data
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from Pages.ClaimPage import ClaimPage
+import os
 
 class ClaimActions(BaseActions):
     
@@ -40,7 +41,10 @@ class ClaimActions(BaseActions):
         
         try:
             
-            employee_name = get_data("test_data/vacancy_data.xlsx","AddVacancy")
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            file_path = os.path.join(current_dir, "..", "test_data", "vacancy_data.xlsx")
+
+            employee_name = get_data(file_path,"AddVacancy")
             
             self.enter_text(ClaimPage.employee_name,employee_name[0][1])
             self.wait_for_visibility(ClaimPage.employee_name_option)

@@ -86,3 +86,5 @@ class LeaveActions(BaseActions):
         self.click(lp.assign_leave_menu)
         self.click(lp.assign_btn)
         return len(lp.messages)
+
+        

@@ -45,3 +45,5 @@ class TestLeave:
         count = leave.assign_leave_all_fields_required()
         print(f"Required Validation Count : {count}")
         assert count >= 2
+        
+    

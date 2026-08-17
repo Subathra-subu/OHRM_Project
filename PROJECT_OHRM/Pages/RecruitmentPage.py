@@ -44,7 +44,7 @@ class Recruit_VacanciesPage(BasePage):
     
     records = (By.XPATH,"//div[@class='oxd-table orangehrm-vacancy-list']/child::div[@class='oxd-table-body']/descendant::div[@class='oxd-table-row oxd-table-row--with-border']/child::*")
     
-    list_box = (By.CSS_SELECTOR, "div[role='listbox']")
+    list_box = (By.XPATH,"//div[@role='listbox' and not(contains(., 'Searching'))]")
     
     edit_message = (By.XPATH,"//h6[text()='Edit Vacancy']")
     

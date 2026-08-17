@@ -15,6 +15,7 @@ class BaseActions:
         self.logger = log_generator()
 
     
+    
     def enter_text(self, locator, value):
 
         try:
