@@ -44,6 +44,9 @@ class buzzPage:
     editpostBUT = (
         By.XPATH,"//ul[@class='oxd-dropdown-menu']/descendant::p[2]"
     )
+    deletepostBUT = (
+        By.XPATH,"//ul[@class='oxd-dropdown-menu']/descendant::p[1]"
+    )
     textarea_edit = (
         By.XPATH,
         "//div[@class='orangehrm-buzz-post-modal-header-text']/descendant::textarea"
@@ -51,6 +54,10 @@ class buzzPage:
     edit_post_btn = (
         By.XPATH,   
         "//div[@class='oxd-form-actions orangehrm-buzz-post-modal-actions']/descendant::button[1]"
+    )
+    delete_post_btn = (
+        By.XPATH,
+        "//div[@class='orangehrm-modal-footer']/child::button[2]"
     )
     @staticmethod
     def posted_text_locator(message):

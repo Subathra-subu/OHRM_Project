@@ -6,6 +6,7 @@ from Utilities.ReadConfig import get_config
 import os
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class buzzActions(BaseActions):
@@ -196,4 +197,31 @@ class buzzActions(BaseActions):
         except Exception as e:
             self.logger.error("Buzz - Editing text post failed")
             self.logger.exception(e)
-            raise    
+            raise
+
+    def delete_buzz_text(self, message):
+        try:
+            self.logger.info("Buzz - Deleting text post started")
+
+            locator = buzzPage.posted_text_locator(message)
+            self.wait_for_visibility(locator)
+
+            self.clickstale(buzzPage.threedot)
+            self.clickstale(buzzPage.deletepostBUT)
+            self.wait_for_visibility(buzzPage.delete_post_btn)
+            self.clickstale(buzzPage.delete_post_btn)
+
+            try:
+                WebDriverWait(self.driver, 15).until(
+                    EC.invisibility_of_element_located(locator)
+                )
+                self.logger.info(f"Buzz - Post deleted successfully: {message}")
+                return True
+            except TimeoutException:
+                self.logger.warning(f"Buzz - Delete confirmation timed out for: {message}")
+                return False
+
+        except Exception as e:
+            self.logger.error("Buzz - Deleting text post failed")
+            self.logger.exception(e)
+            raise
