@@ -58,4 +58,16 @@ class TestLeave:
         employee_name = data[0][0]
         result = leave.search_leave_list(employee_name)
         assert "James Butler" in result
-        assert "Taken" in result
+        assert "Scheduled" in result
+
+    def test_leave_invalidUser_search(self):
+        username = get_config("username and password", "username")
+        password = get_config("username and password","password")
+        login = LoginActions(self.driver,self.wait)
+        login.login(username,password)
+        leave = LeaveActions(self.driver,self.wait)
+        data = get_excel_data("test_data/DirectoryData.xlsx","EmployeeSearch")
+        employee_name = "qwErTY"
+        result = leave.invalidEmployee_search(employee_name)
+
+
