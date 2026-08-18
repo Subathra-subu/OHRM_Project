@@ -5,6 +5,7 @@ from Utilities.ExcelUtils import get_data
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from Pages.ClaimPage import ClaimPage
+import os
 
 class ClaimActions(BaseActions):
     
@@ -22,9 +23,7 @@ class ClaimActions(BaseActions):
             
             self.logger.info("Claim link clikced")
             
-            self.js_click(ClaimPage.assign_claim)
-        
-            self.logger.info("Assign claim section clikced")
+            
     
         except Exception as e:
 
@@ -40,7 +39,14 @@ class ClaimActions(BaseActions):
         
         try:
             
-            employee_name = get_data("test_data/vacancy_data.xlsx","AddVacancy")
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            file_path = os.path.join(current_dir, "..", "test_data", "vacancy_data.xlsx")
+
+            employee_name = get_data(file_path,"AddVacancy")
+            
+            self.js_click(ClaimPage.assign_claim)
+                    
+            self.logger.info("Assign claim section clikced")
             
             self.enter_text(ClaimPage.employee_name,employee_name[0][1])
             self.wait_for_visibility(ClaimPage.employee_name_option)
@@ -64,4 +70,41 @@ class ClaimActions(BaseActions):
             
             self.logger.exception(e)
             
+            raise
+        
+    def submitClaim(self):
+
+        try:
+        
+            actions = ActionChains(self.driver)
+
+            self.js_click(ClaimPage.submitClaim)
+            self.logger.info("Submit claim section clicked")
+
+            self.js_click(ClaimPage.event)
+            self.logger.info("Event dropdown clicked")
+
+            self.wait_for_visibility(ClaimPage.eventOption)
+            self.js_click(ClaimPage.eventOption)
+            self.logger.info("Accommodation selected")
+
+            self.js_click(ClaimPage.currency)
+            self.logger.info("Currency dropdown clicked")
+
+            self.wait_for_visibility(ClaimPage.list_box)
+            actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ENTER).perform()
+
+            self.js_click(ClaimPage.create)
+            self.logger.info("Create button clicked")
+
+            self.js_click(ClaimPage.submitButton)
+            self.logger.info("Submit button clicked")
+
+            return True
+
+        except Exception as e:
+
+            self.logger.error("Submit claim failed")
+            self.logger.exception(e)
+
             raise
