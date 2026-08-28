@@ -77,4 +77,26 @@ class Test_buzz:
         except Exception as e:
             self.logger.error("******** Buzz Text Edit Test Failed ********")
             self.logger.exception(e)
-            raise    
+            raise
+
+    def test_successfully_delete_buzz_text(self):
+        try:
+            self.logger.info("******** Buzz Text Delete Test Started ********")
+
+            self.buzz = buzzActions(self.driver, self.wait)
+
+            message = "Delete Automation Test Buzz Post"
+            self.buzz.share_buzz_text(message)
+
+            is_deleted = self.buzz.delete_buzz_text(message)
+
+            assert is_deleted is True, (
+                f"Expected post '{message}' to be deleted, but it is still visible."
+            )
+
+            self.logger.info("******** Buzz Text Delete Test Passed ********")
+
+        except Exception as e:
+            self.logger.error("******** Buzz Text Delete Test Failed ********")
+            self.logger.exception(e)
+            raise
