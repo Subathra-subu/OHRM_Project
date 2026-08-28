@@ -220,7 +220,6 @@ class buzzActions(BaseActions):
             except TimeoutException:
                 self.logger.warning(f"Buzz - Delete confirmation timed out for: {message}")
                 return False
-
         except Exception as e:
             self.logger.error("Buzz - Deleting text post failed")
             self.logger.exception(e)

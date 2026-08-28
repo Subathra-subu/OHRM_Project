@@ -36,7 +36,6 @@ class buzzPage:
         By.XPATH,
         "//div[@class='orangehrm-buzz-create-post-header-text']/descendant::button[1]"
     )
-
     threedot = (
         By.XPATH,
         "//div[@class='oxd-grid-1 orangehrm-buzz-newsfeed-posts']/div[1]/descendant::button[1]"

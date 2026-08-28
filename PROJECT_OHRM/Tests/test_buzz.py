@@ -67,7 +67,6 @@ class Test_buzz:
 
             # Now, edit the posted message
             actual_edited_text = self.buzz.edit_buzz_text(original_message, edited_message)
-
             assert actual_edited_text == edited_message, (
                 f"Expected '{edited_message}' but found '{actual_edited_text}'"
             )
